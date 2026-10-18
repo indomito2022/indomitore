@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+{{HEAD}}
+<title>{{o_title}} · {{o_price}} | Indómito</title>
+<meta name="description" content="{{o_meta}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{o_title}} · {{o_price}}">
+<meta property="og:description" content="{{o_meta}}">
+<meta property="og:image" content="{{o_img}}">
+<meta property="og:url" content="{{canonical}}">
+<link rel="canonical" href="{{canonical}}">
+</head>
+<body>
+{{HEADER}}
+
+<main class="wrap op">
+  <nav class="crumbs" aria-label="breadcrumb">
+    <a href="{{home}}#oferty">{{o_back}}</a><span aria-hidden="true">/</span>
+    <span>{{o_region}}</span><span aria-hidden="true">/</span>
+    <span>{{o_town}}</span>
+  </nav>
+
+  <div class="op-head">
+    <div>
+      <h1>{{o_title}}</h1>
+      <div class="loc">{{o_loc}}</div>
+    </div>
+    <div class="op-price"><b class="num">{{o_price}}</b><span>{{o_ref}} {{o_refno}}</span></div>
+  </div>
+
+  <div class="mosaic{{mosaic_cls}}" id="mosaic">{{mosaic}}</div>
+  <div class="mob-count">{{o_nphotos}}</div>
+
+  <div class="op-main">
+    <div>
+      <ul class="specs">{{specs}}</ul>
+      {{desc_block}}
+      {{feats_block}}
+      {{map_block}}
+    </div>
+    <aside class="op-aside">
+      <div class="ask">
+        <h3>{{o_ask_h}}</h3>
+        <p>{{o_ask_p}}</p>
+        <div class="refbox">{{o_ref}} <b>{{o_refno}}</b></div>
+        <a class="btn gold" href="{{o_wa}}" target="_blank" rel="noopener">{{wa_btn}}</a>
+        <div class="ci"><span>{{c_phone}}</span><a href="tel:+34613152755">+34 613 15 27 55</a></div>
+        <div class="ci"><span>{{c_email}}</span><a href="mailto:info@indomitore.com?subject={{o_mail_subj}}">info@indomitore.com</a></div>
+      </div>
+      <p class="op-note">{{o_note}}</p>
+    </aside>
+  </div>
+
+  {{similar_block}}
+</main>
+
+{{FOOTER}}
+
+<dialog class="lb" id="lb" aria-label="{{o_photos}}">
+  <div class="lb-top"><span id="lbNum" class="num"></span><button class="lb-x" id="lbX" type="button" aria-label="{{o_close}}">×</button></div>
+  <div class="lb-track" id="lbTrack">{{lb_imgs}}</div>
+  <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="{{o_prev}}">←</button>
+  <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="{{o_next}}">→</button>
+</dialog>
+
+<script>
+(function(){
+  const lb = document.getElementById("lb"), tr = document.getElementById("lbTrack"), num = document.getElementById("lbNum");
+  const n = tr.children.length;
+  const idx = () => Math.round(tr.scrollLeft / tr.clientWidth);
+  const upd = () => { num.textContent = `${idx()+1} / ${n}`; };
+  const go = i => tr.scrollTo({left: Math.max(0, Math.min(n-1, i)) * tr.clientWidth, behavior: "smooth"});
+  const open = i => {
+    tr.querySelectorAll("img[data-src]").forEach(im => { im.src = im.dataset.src; im.removeAttribute("data-src"); });
+    lb.showModal(); tr.scrollLeft = i * tr.clientWidth; upd();
+  };
+  document.querySelectorAll("[data-open]").forEach(b => b.addEventListener("click", () => open(+b.dataset.open)));
+  tr.addEventListener("scroll", upd, {passive:true});
+  document.getElementById("lbPrev").onclick = () => go(idx()-1);
+  document.getElementById("lbNext").onclick = () => go(idx()+1);
+  document.getElementById("lbX").onclick = () => lb.close();
+  lb.addEventListener("keydown", e => { if (e.key === "ArrowRight") go(idx()+1); if (e.key === "ArrowLeft") go(idx()-1); });
+})();
+</script>
+</body>
+</html>

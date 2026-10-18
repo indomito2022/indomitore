@@ -8,7 +8,11 @@ Co noc GitHub sam pobiera feed, buduje stronę i publikuje ją pod indomitore.co
 | Plik | Do czego |
 |---|---|
 | `build.py` | Pobiera feed RedSP i oferty z Notion, tłumaczy cechy na polski, składa stronę w `dist/` |
-| `template.html` | Wygląd strony (kolory i fonty marki Indómito) |
+| `template.html` | Strona główna (układ) |
+| `oferta.html` | Podstrona pojedynczej oferty |
+| `glowa.html`, `naglowek.html`, `stopka.html` | Wspólne części wszystkich stron |
+| `styl.css` | Wygląd (kolory, fonty, układ) |
+| `teksty.json` | Wszystkie teksty strony po polsku, hiszpańsku i angielsku |
 | `.github/workflows/publikuj.yml` | Codzienna automatyczna aktualizacja i publikacja |
 
 ## Uruchomienie (jednorazowo)
@@ -67,3 +71,16 @@ Bez tych plików w tle jest zdjęcie pierwszej oferty wyróżnionej. Na telefoni
 ## Zdjęcie w sekcji „O mnie”
 
 Wgraj do repozytorium plik `portret.jpg` (kwadratowe zdjęcie, min. 800×800 px, twarz na środku). Pojawi się w okrągłej złotej ramce. Bez pliku sekcja wyświetla się bez zdjęcia.
+
+
+## Języki i podstrony ofert
+
+Strona ma trzy wersje językowe (przełącznik PL · ES · EN w nagłówku):
+- polska: `indomitore.com/`, oferty: `indomitore.com/oferta/<NUMER>/`
+- hiszpańska: `indomitore.com/es/`, oferty: `indomitore.com/es/propiedad/<NUMER>/`
+- angielska: `indomitore.com/en/`, oferty: `indomitore.com/en/property/<NUMER>/`
+
+Każda oferta ma własną podstronę (galeria, parametry, opis, mapa, WhatsApp z numerem oferty, podobne oferty), którą można wysłać klientowi albo wkleić na Facebooka (podgląd ze zdjęciem).
+Tytuły i opisy ofert pochodzą z feedu w danym języku; jeśli deweloper nie podał tłumaczenia, pokazuje się wersja angielska.
+
+**Zmiana tekstów:** wszystkie teksty strony są w `teksty.json` (osobno `pl`, `es`, `en`). Edytuj na GitHubie (ołówek) → Commit, strona przebuduje się sama.
