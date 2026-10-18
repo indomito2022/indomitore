@@ -31,4 +31,24 @@
       }
     });
   });
+  // zapis na newsletter (stopka każdej podstrony)
+  document.querySelectorAll("form[data-news]").forEach(f => {
+    const note = f.querySelector("[data-note]"), btn = f.querySelector('button[type="submit"]');
+    const say = (t, bad) => { note.textContent = t; note.style.color = bad ? "var(--terra)" : ""; };
+    f.addEventListener("submit", async e => {
+      e.preventDefault();
+      const email = f.elements.email.value.trim();
+      if (!okEmail(email)) { f.elements.email.focus(); return say(C.err_email, true); }
+      if (!f.elements.consent_mkt.checked) return say(C.nl_err_consent, true);
+      btn.disabled = true; say(C.sending);
+      try {
+        const r = await fetch(C.endpoint, { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "newsletter", name: f.elements.name.value.trim(), email, lang: C.lang,
+            page: location.href, consent_mkt: true, website: f.elements.website.value }) });
+        if (!r.ok) throw new Error(r.status);
+        f.reset(); say(C.nl_ok);
+      } catch (err) { say(C.err, true); }
+      btn.disabled = false;
+    });
+  });
 })();

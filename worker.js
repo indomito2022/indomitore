@@ -27,6 +27,32 @@ export default {
     try { d = await req.json(); } catch { return out(400, { ok: false }); }
     if (d.website) return out(200, { ok: true }); // pułapka na boty
 
+    // zapis na newsletter (stopka strony): tylko e-mail (+ imię), wymagana zgoda na oferty
+    if (d.type === "newsletter") {
+      const em = clean(d.email, 120), nm = clean(d.name, 120);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return out(400, { ok: false, error: "missing" });
+      if (d.consent_mkt !== true) return out(400, { ok: false, error: "consent" });
+      const day = new Date().toISOString().slice(0, 10);
+      const np = {
+        "Imię i nazwisko": { title: txt(nm || em) },
+        "Email": { email: em },
+        "Źródło leada": { select: { name: "Newsletter" } },
+        "Etap": { status: { name: "Nowy lead" } },
+        "Szuka – rynek": { multi_select: [{ name: "Nowe" }] },
+        "Notatki": { rich_text: txt([`Zapis na newsletter: ${day}`, d.page && `Strona: ${clean(d.page, 300)}`,
+          `Zgoda na otrzymywanie ofert (e-mail, telefon, WhatsApp): tak (${day})`].filter(Boolean).join("\n")) },
+        "Zgoda na oferty": { checkbox: true },
+      };
+      if (LANG[d.lang]) np["Język"] = { select: { name: LANG[d.lang] } };
+      const nr = await fetch("https://api.notion.com/v1/pages", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${env.NOTION_TOKEN}`, "Notion-Version": "2022-06-28", "Content-Type": "application/json" },
+        body: JSON.stringify({ parent: { database_id: DB }, properties: np }),
+      });
+      if (!nr.ok) { console.log("Notion error", nr.status, await nr.text()); return out(502, { ok: false }); }
+      return out(200, { ok: true });
+    }
+
     const name = clean(d.name, 120), phone = clean(d.phone, 40), email = clean(d.email, 120);
     if (!name || !phone || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || phone.replace(/\D/g, "").length < 9)
       return out(400, { ok: false, error: "missing" });

@@ -1,3 +1,16 @@
+<section class="nl" id="newsletter"><div class="wrap nl-in">
+  <div class="nl-txt"><div class="eyebrow">{{nl_eyebrow}}</div><h2>{{nl_h}}</h2><p>{{nl_p}}</p></div>
+  <form class="nl-form" data-news novalidate>
+    <div class="nl-row">
+      <input name="name" autocomplete="given-name" placeholder="{{nl_name}}" aria-label="{{nl_name}}">
+      <input name="email" type="email" autocomplete="email" placeholder="{{nl_email}}" aria-label="{{nl_email}}" required>
+      <button class="btn gold" type="submit">{{nl_btn}}</button>
+    </div>
+    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label class="consent"><input type="checkbox" name="consent_mkt" required> <span>{{nl_consent}} <a href="{{privacy_url}}">{{priv}}</a></span></label>
+    <p class="note" data-note></p>
+  </form>
+</div></section>
 <footer><div class="wrap">
   <img src="{{base}}logo-pelne.png" alt="Indómito Real Estate" width="127" height="52" loading="lazy">
   <div class="fl">
