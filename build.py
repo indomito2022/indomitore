@@ -528,6 +528,15 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
     head = headline_count(dev)
     prices = [150000, 200000, 250000, 300000, 400000, 500000, 750000, 1000000, 1500000]
     portrait = files.get("portret")
+    reel = files.get("reel")
+    ig_block = ""
+    if files.get("ig"):
+        fid, prof = files["ig"]
+        follow = f'<a class="btn" href="{E(prof)}" target="_blank" rel="noopener">{E(t["ig_follow"])}</a>' if prof else ""
+        ig_block = (f'<section class="sec rule" id="instagram"><div class="wrap"><div class="sec-top"><div class="sec-head">'
+                    f'<div class="eyebrow">Instagram</div><h2>{E(t["ig_h2"])}</h2></div>{follow}</div>'
+                    f'<div class="ig"><behold-widget feed-id="{E(fid)}"></behold-widget></div></div></section>'
+                    '<script type="module" src="https://w.behold.so/widget.js"></script>')
     ctx.update({
         "meta_title": E(t["meta_title"].replace("{n}", head)), "meta_desc": E(t["meta_desc"].replace("{n}", head)),
         "devcount": head, "all_n": nf(len(props), lang),
@@ -535,8 +544,12 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
         "st_min_n": E(fmt_price(stats["minPrice"], lang)),
         "price_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in prices),
         "price_from_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in [100000] + prices[:-1]),
-        "about_cls": "" if portrait else " noimg",
-        "portrait": (f'<div class="portrait"><img src="{base}{portrait}" alt="{E(t["about_alt"])}" loading="lazy"></div>' if portrait else ""),
+        "about_cls": "" if (portrait or reel) else " noimg",
+        "portrait": (f'<div class="reel"><video src="{base}{reel}?v={ver}" controls playsinline preload="metadata"'
+                     + (f' poster="{base}{files["reel_poster"]}?v={ver}"' if files.get("reel_poster") else "")
+                     + f' aria-label="{E(t["about_video"])}"></video></div>') if reel else
+                    (f'<div class="portrait"><img src="{base}{portrait}" alt="{E(t["about_alt"])}" loading="lazy"></div>' if portrait else ""),
+        "ig_block": ig_block,
         "og_image": E(featured[0]["imgs"][0]) if featured and re.match(r"https?://", featured[0]["imgs"][0]) else SITE + "logo-pelne.png",
         "locale": t["locale"], "offer_path": OFFER_DIR[lang][len(HOME[lang]):],
     })
@@ -591,6 +604,17 @@ def copy_static(dist, featured):
         s = asset(name)
         if s:
             shutil.copyfile(s, os.path.join(dist, name)); out["portret"] = name; break
+    # pionowe wideo do sekcji „O mnie” (wystarczy wgrać o-mnie.mp4, opcjonalnie okładkę o-mnie.jpg)
+    for name, key in (("o-mnie.mp4", "reel"), ("o-mnie.jpg", "reel_poster")):
+        s = asset(name)
+        if s:
+            shutil.copyfile(s, os.path.join(dist, name)); out[key] = name
+    # Instagram (Behold.so): instagram.txt → 1. linia ID feedu, 2. linia (opcjonalnie) link do profilu
+    s = asset("instagram.txt")
+    if s:
+        lines = [l.strip() for l in open(s, encoding="utf-8").read().splitlines() if l.strip() and not l.strip().startswith("#")]
+        if lines and re.fullmatch(r"[A-Za-z0-9_-]{6,64}", lines[0]):
+            out["ig"] = (lines[0], lines[1] if len(lines) > 1 and re.match(r"https://(www\.)?instagram\.com/", lines[1]) else "")
     hero = {"video": [], "mobile": []}
     for name, typ, key in (("hero.webm", "video/webm", "video"), ("hero.mp4", "video/mp4", "video"),
                            ("hero-mobile.mp4", "video/mp4", "mobile")):
@@ -648,7 +672,7 @@ def build(props, dist):
         f.write(DOMAIN + "\n")
     size = sum(os.path.getsize(os.path.join(r, n)) for r, _, fs in os.walk(dist) for n in fs)
     print(f"Wyróżnione: {', '.join(p['ref'] for p in featured) or 'brak'}; wideo: {'tak' if hero['video'] else 'nie'}; "
-          f"portret: {'tak' if files.get('portret') else 'nie'}")
+          f"portret: {'tak' if files.get('portret') else 'nie'}; wideo o mnie: {'tak' if files.get('reel') else 'nie'}; instagram: {'tak' if files.get('ig') else 'nie'}")
     print(f"OK: {len(props)} ofert × {len(LANGS)} języki = {len(urls)} stron -> {dist}/ ({size // 1024 // 1024} MB)")
 
 
