@@ -31,16 +31,22 @@
           <input id="fTown" type="search" list="towns" placeholder="{{s_town_ph}}" autocomplete="off" enterkeyhint="search"><datalist id="towns"></datalist></div>
         <div class="f"><label for="fGrp">{{s_region}}</label>
           <select id="fGrp"><option value="">{{s_all}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></div>
-        <div class="f"><label for="fType">{{s_type}}</label><select id="fType"><option value="">{{s_all}}</option></select></div>
+        <div class="f"><label for="fType">{{s_type}}</label><select id="fType"><option value="">{{s_all}}</option>
+          <optgroup label="{{t_groups}}"><option value="g:apt">{{t_apt}}</option><option value="g:house">{{t_house}}</option><option value="g:villa">{{t_villa}}</option></optgroup>
+          <optgroup label="{{t_exact}}" id="fTypeExact"></optgroup></select></div>
         <div class="f"><label for="fBeds">{{s_beds}}</label>
           <select id="fBeds"><option value="0">{{s_any}}</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></div>
-        <div class="f"><label for="fPrice">{{s_price}}</label>
+        <div class="f"><label for="fPriceMin">{{s_price_from}}</label>
+          <select id="fPriceMin"><option value="0">{{s_from_any}}</option>{{price_from_options}}</select></div>
+        <div class="f"><label for="fPrice">{{s_price_to}}</label>
           <select id="fPrice"><option value="0">{{s_nolimit}}</option>{{price_options}}</select></div>
         <button class="btn gold go" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>{{s_search}}</button>
       </div>
       <div class="s-foot">
         <label class="chk" for="fPool"><input type="checkbox" id="fPool"> {{s_pool}}</label>
         <label class="chk" for="fBeach"><input type="checkbox" id="fBeach"> {{s_beach}}</label>
+        <label class="chk" for="fTour"><input type="checkbox" id="fTour"> {{s_tour}}</label>
+        <label class="chk" for="fGolf"><input type="checkbox" id="fGolf"> {{s_golf}}</label>
         <span class="s-note">{{s_note}}</span>
       </div>
     </form>
@@ -199,7 +205,7 @@ document.querySelectorAll(".region").forEach(b => b.addEventListener("click", ()
 
 // typy i miejscowości do wyszukiwarki
 [...new Set(DATA.map(d => d.type).filter(Boolean))].sort((a,b)=>a.localeCompare(b,LOCALE)).forEach(t => {
-  const o = document.createElement("option"); o.value = o.textContent = t; $("#fType").append(o);
+  const o = document.createElement("option"); o.value = o.textContent = t; $("#fTypeExact").append(o);
 });
 [...new Set(DATA.map(d => d.town).filter(Boolean))].sort((a,b)=>a.localeCompare(b,LOCALE)).forEach(t => {
   const o = document.createElement("option"); o.value = t; $("#towns").append(o);
@@ -255,26 +261,32 @@ if (FEAT.length) { $("#feat").innerHTML = FEAT.map(d => card(d, true)).join("");
 let shown = PAGE, list = [];
 const STORE = "ind-filters-" + LANG;
 function filters(){
-  return { town:$("#fTown").value.trim(), grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, price:+$("#fPrice").value,
-           sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked };
+  let min = +$("#fPriceMin").value, max = +$("#fPrice").value;
+  if (min && max && min > max) { [min, max] = [max, min]; $("#fPriceMin").value = min; $("#fPrice").value = max; }
+  return { town:$("#fTown").value.trim(), grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, min, price:max,
+           sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked, tour:$("#fTour").checked, golf:$("#fGolf").checked };
 }
 function describe(f){
   const p = [];
   if (f.town) p.push(`“${f.town}”`);
   if (f.grp) p.push($("#fGrp").selectedOptions[0].textContent);
-  if (f.type) p.push(f.type);
+  if (f.type) p.push($("#fType").selectedOptions[0].textContent);
   if (f.beds) p.push(`${f.beds}+ ${pl(f.beds, T.bed)}`);
+  if (f.min) p.push(T.crit_from.replace("{p}", fmtPrice(f.min)));
   if (f.price) p.push(T.crit_upto.replace("{p}", fmtPrice(f.price)));
   if (f.pool) p.push(T.crit_pool);
   if (f.beach) p.push(T.crit_beach);
+  if (f.tour) p.push(T.crit_tour);
+  if (f.golf) p.push(T.crit_golf);
   return p.length ? p.join(" · ") : T.crit_all;
 }
 function apply(reset=true){
   const f = filters(), q = fold(f.town);
   list = DATA.filter(d =>
     (!q || fold(d.town).includes(q) || fold(d.title).includes(q) || fold(d.region).includes(q)) &&
-    (!f.grp || d.grp === f.grp) && (!f.type || d.type === f.type) && d.beds >= f.beds &&
-    (!f.price || (d.price && d.price <= f.price)) && (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)));
+    (!f.grp || d.grp === f.grp) && (!f.type || (f.type.startsWith("g:") ? d.k === f.type.slice(2) : d.type === f.type)) && d.beds >= f.beds &&
+    (!f.min || d.price >= f.min) && (!f.price || (d.price && d.price <= f.price)) &&
+    (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)) && (!f.tour || d.tl) && (!f.golf || d.gf));
   if (f.sort === "asc") list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
   else if (f.sort === "desc") list.sort((a,b)=>b.price-a.price);
   else if (f.sort === "beach") list.sort((a,b)=>(a.beach||1e9)-(b.beach||1e9));
@@ -303,8 +315,10 @@ $("#moreBtn").addEventListener("click", () => { shown += PAGE; render(); });
 // przywróć ostatnie kryteria
 try {
   const s = JSON.parse(localStorage.getItem(STORE) || "null");
-  if (s) { $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0; $("#fPrice").value=s.price||0;
-           $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; }
+  if (s) { $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0;
+           $("#fPriceMin").value=s.min||0; $("#fPrice").value=s.price||0;
+           $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; $("#fTour").checked=!!s.tour; $("#fGolf").checked=!!s.golf;
+           if ($("#fType").value !== (s.type||"")) $("#fType").value = ""; }
 } catch(e) {}
 apply();
 

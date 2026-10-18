@@ -47,6 +47,20 @@ FLAGS = {  # flagi w przełączniku języka (proste SVG, bez plików)
           '<path d="M30,0v40M0,20h60" stroke="#C8102E" stroke-width="7"/></g></svg>',
 }
 
+KIND = {  # typ z feedu -> grupa do filtra: apt = apartamenty, house = domy, villa = wille
+    "Apartment": "apt", "Penthouse": "apt", "Studio": "apt", "Bungalow": "apt", "Duplex": "apt",
+    "Town House": "house", "Quad House": "house", "Semi-Detached House": "house", "Villa": "villa",
+}
+
+
+def kind_pl(t):
+    """Grupa dla typów z Notion (po polsku)."""
+    t = (t or "").lower()
+    if "will" in t: return "villa"
+    if any(x in t for x in ("dom", "bliźn", "szereg", "quad")): return "house"
+    return "apt"
+
+
 TYPES = {  # typ z feedu -> (pl, es, en)
     "Villa": ("Willa", "Villa", "Villa"), "Apartment": ("Apartament", "Apartamento", "Apartment"),
     "Penthouse": ("Penthouse", "Ático", "Penthouse"), "Bungalow": ("Bungalow", "Bungalow", "Bungalow"),
@@ -150,6 +164,9 @@ def norm(rec, source="redsp"):
         "beds": int(rec.get("b") or 0), "baths": int(rec.get("ba") or 0),
         "m2": int(float(rec.get("m") or 0)), "plot": int(float(rec.get("pl") or 0)), "beach": int(float(rec.get("be") or 0)),
         "pool": pool, "lat": rec.get("la"), "lng": rec.get("ln"),
+        "kind": KIND.get(rec.get("t", ""), "apt"),
+        "tour": any(f["en"] == "Tourist licence" for f in feats),
+        "golf": any(f["en"] == "Near golf" for f in feats),
         "title": {l: html.unescape(v).strip() for l, v in as_langs(rec.get("ti")).items()},
         "desc": {l: clean_desc(v) for l, v in as_langs(rec.get("d")).items()},
         "feats": feats, "imgs": rec.get("i", []),
@@ -178,6 +195,8 @@ def parse_feed(path):
             out.append(norm(rec))
         el.clear()
     print("Opisy w feedzie: " + ", ".join(f"{l.upper()} {n}" for l, n in have.items()))
+    print(f"Licencja turystyczna: {sum(p['tour'] for p in out)}, golf w pobliżu: {sum(p['golf'] for p in out)}, "
+          f"apartamenty/domy/wille: {sum(p['kind']=='apt' for p in out)}/{sum(p['kind']=='house' for p in out)}/{sum(p['kind']=='villa' for p in out)}")
     return out
 
 
@@ -234,7 +253,8 @@ def fetch_notion(token, db_id, dist):
             "beds": int(num("Sypialnie")), "baths": int(num("Łazienki")), "m2": int(num("Metraż m²")), "plot": 0,
             "beach": 0, "pool": any("Basen" in a for a in amen), "lat": None, "lng": None,
             "title": {"pl": txt("Nazwa")}, "desc": {"pl": clean_desc(txt("Opis"))},
-            "feats": [{l: a for l in LANGS} for a in amen], "imgs": imgs,
+            "feats": [{l: a for l in LANGS} for a in amen], "imgs": imgs, "kind": kind_pl(sel("Typ")),
+            "tour": any("turyst" in a.lower() for a in amen), "golf": any("golf" in a.lower() for a in amen),
             "reserved": (pr.get("Status", {}).get("status") or {}).get("name") == "Zarezerwowana",
             "featured": bool(pr.get("Wyróżniona", {}).get("checkbox")),
         })
@@ -482,6 +502,9 @@ def summary(p, lang):
     s = {k: p[k] for k in ("ref", "src", "price", "town", "grp", "beds", "baths", "m2", "beach", "pool")}
     s.update({"type": by_lang(p["type"], lang), "region": region_label(p, lang), "title": by_lang(p["title"], lang),
               "img": p["imgs"][0], "n": len(p["imgs"])})
+    s["k"] = p.get("kind", "apt")
+    if p.get("tour"): s["tl"] = 1
+    if p.get("golf"): s["gf"] = 1
     if p.get("reserved"): s["reserved"] = True
     if p.get("feat"): s["feat"] = p["feat"]
     return s
@@ -495,7 +518,7 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
     base = ctx["base"]
     dev = stats["dev"]
     head = headline_count(dev)
-    prices = [200000, 250000, 300000, 400000, 500000, 750000, 1000000]
+    prices = [150000, 200000, 250000, 300000, 400000, 500000, 750000, 1000000, 1500000]
     portrait = files.get("portret")
     ctx.update({
         "meta_title": E(t["meta_title"].replace("{n}", head)), "meta_desc": E(t["meta_desc"].replace("{n}", head)),
@@ -503,6 +526,7 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
         "st_dev_n": f"{head}+" if dev >= 100 else str(dev), "st_towns_n": str(stats["towns"]),
         "st_min_n": E(fmt_price(stats["minPrice"], lang)),
         "price_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in prices),
+        "price_from_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in [100000] + prices[:-1]),
         "about_cls": "" if portrait else " noimg",
         "portrait": (f'<div class="portrait"><img src="{base}{portrait}" alt="{E(t["about_alt"])}" loading="lazy"></div>' if portrait else ""),
         "og_image": E(featured[0]["imgs"][0]) if featured and re.match(r"https?://", featured[0]["imgs"][0]) else SITE + "logo-pelne.png",
