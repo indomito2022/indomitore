@@ -529,6 +529,14 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
     prices = [150000, 200000, 250000, 300000, 400000, 500000, 750000, 1000000, 1500000]
     portrait = files.get("portret")
     reel = files.get("reel")
+    media = []
+    if portrait:
+        media.append(f'<div class="reel photo"><img src="{base}{portrait}?v={ver}" alt="{E(t["about_alt"])}" loading="lazy" width="900" height="1600"></div>')
+    if reel:
+        media.append(f'<div class="reel"><video src="{base}{reel}?v={ver}" controls playsinline preload="metadata"'
+                     + (f' poster="{base}{files["reel_poster"]}?v={ver}"' if files.get("reel_poster") else "")
+                     + f' aria-label="{E(t["about_video"])}"></video></div>')
+    about_media = (f'<div class="about-media{" two" if len(media) == 2 else ""}">' + "".join(media) + "</div>") if media else ""
     ig_block = ""
     if files.get("ig"):
         fid, prof = files["ig"]
@@ -545,10 +553,7 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
         "price_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in prices),
         "price_from_options": "".join(f'<option value="{v}">{E(fmt_price(v, lang))}</option>' for v in [100000] + prices[:-1]),
         "about_cls": "" if (portrait or reel) else " noimg",
-        "portrait": (f'<div class="reel"><video src="{base}{reel}?v={ver}" controls playsinline preload="metadata"'
-                     + (f' poster="{base}{files["reel_poster"]}?v={ver}"' if files.get("reel_poster") else "")
-                     + f' aria-label="{E(t["about_video"])}"></video></div>') if reel else
-                    (f'<div class="portrait"><img src="{base}{portrait}" alt="{E(t["about_alt"])}" loading="lazy"></div>' if portrait else ""),
+        "portrait": about_media,
         "ig_block": ig_block,
         "og_image": E(featured[0]["imgs"][0]) if featured and re.match(r"https?://", featured[0]["imgs"][0]) else SITE + "logo-pelne.png",
         "locale": t["locale"], "offer_path": OFFER_DIR[lang][len(HOME[lang]):],
