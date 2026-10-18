@@ -404,7 +404,8 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
     })
     j = T[lang]["js"]
     ctx["form_cfg"] = json.dumps({"lang": lang, "endpoint": FORM_ENDPOINT, "sending": j["f_sending"], "ok": j["f_ok"],
-                                  "err": j["f_err"], "err_consent": j["f_err_consent"], "err_missing": j["form_err"]},
+                                  "err": j["f_err"], "err_consent": j["f_err_consent"], "err_missing": j["form_err"],
+                                  "err_email": j["f_err_email"], "err_phone": j["f_err_phone"]},
                                  ensure_ascii=False).replace("</", "<\\/")
     ctx["HEAD"] = render(read("glowa.html"), ctx)
     ctx["HEADER"] = render(read("naglowek.html"), ctx)

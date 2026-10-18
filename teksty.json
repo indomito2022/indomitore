@@ -168,7 +168,7 @@
       "crit_beach": "do 1 km od plaży",
       "ask_offers": "Zapytaj o oferty",
       "wa_hello": "Dzień dobry, szukam nieruchomości w Hiszpanii i chciałbym/chciałabym porozmawiać.",
-      "form_err": "Wpisz imię i telefon lub e-mail, żebym mogła odpowiedzieć.",
+      "form_err": "Wpisz imię, telefon i e-mail, żebym mogła odpowiedzieć.",
       "form_ok": "Otworzyłam WhatsApp z Twoją wiadomością. Wystarczy kliknąć „Wyślij”.",
       "form_msg": "Dzień dobry, nazywam się {name}.\nKontakt: {contact}\nBudżet: {budget}\nRegion: {region}\n{msg}",
       "view": "Zobacz szczegóły",
@@ -178,7 +178,9 @@
       "f_sending": "Wysyłam…",
       "f_ok": "Dziękuję! Zapytanie dotarło. Odezwę się osobiście, zwykle tego samego dnia.",
       "f_err": "Nie udało się wysłać. Napisz proszę na WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Zaznacz zgodę, żebym mogła odpowiedzieć."
+      "f_err_consent": "Zaznacz obie zgody, żebym mogła odpowiedzieć i przesłać Ci oferty.",
+      "f_err_email": "Sprawdź proszę adres e-mail.",
+      "f_err_phone": "Sprawdź proszę numer telefonu (z kierunkowym kraju)."
     },
     "s_price_from": "Cena od",
     "s_price_to": "Cena do",
@@ -190,12 +192,15 @@
     "t_house": "Domy (szeregowe, bliźniaki)",
     "t_villa": "Wille",
     "t_exact": "Dokładny typ",
-    "f_consent": "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie i przedstawienia ofert.",
+    "f_consent": "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na moje zapytanie.",
     "f_or_wa": "albo napisz od razu na WhatsApp",
     "priv": "Polityka prywatności",
     "o_form_msg_ph": "Np. czy oferta jest dostępna, termin wizyty…",
     "pp_title": "Polityka prywatności",
-    "pp_body": "<p><b>Administrator danych:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, Hiszpania. Kontakt: info@indomitore.com, +34 613 15 27 55.</p><p><b>Jakie dane zbieram:</b> imię, telefon lub e-mail, budżet, region i treść wiadomości, które podajesz w formularzu, oraz numer oferty, przy której wysyłasz zapytanie.</p><p><b>Cel i podstawa:</b> odpowiedź na Twoje zapytanie i przedstawienie ofert nieruchomości, na podstawie Twojej zgody (art. 6 ust. 1 lit. a RODO). Zgodę możesz wycofać w każdej chwili, pisząc na info@indomitore.com.</p><p><b>Gdzie przechowuję dane:</b> w moim systemie do obsługi klientów (Notion). Formularz przesyła dane przez Cloudflare. Ci dostawcy przetwarzają dane w moim imieniu, także poza EOG, na podstawie standardowych klauzul umownych UE.</p><p><b>Jak długo:</b> do wycofania zgody, nie dłużej niż 24 miesiące od ostatniego kontaktu, chyba że dojdzie do współpracy (wtedy zgodnie z przepisami o obrocie nieruchomościami i podatkowymi).</p><p><b>Twoje prawa:</b> dostęp do danych, ich sprostowanie, usunięcie, ograniczenie przetwarzania, przeniesienie, sprzeciw oraz skarga do organu nadzorczego (w Hiszpanii: AEPD, www.aepd.es).</p><p><b>Strona</b> nie używa plików cookies do śledzenia ani reklam. Zapamiętuje tylko Twoje ostatnie kryteria wyszukiwania w Twojej przeglądarce.</p>"
+    "pp_body": "<p><b>Administrator danych:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, Hiszpania. Kontakt: info@indomitore.com, +34 613 15 27 55.</p><p><b>Jakie dane zbieram:</b> imię, telefon, e-mail, budżet, region i treść wiadomości, które podajesz w formularzu, oraz numer oferty, przy której wysyłasz zapytanie.</p><p><b>Cel i podstawa:</b> odpowiedź na Twoje zapytanie oraz przesyłanie ofert nieruchomości e-mailem, telefonicznie i przez WhatsApp, na podstawie Twoich zgód (art. 6 ust. 1 lit. a RODO; art. 21 hiszpańskiej ustawy LSSI). Każdą zgodę możesz wycofać w każdej chwili, pisząc na info@indomitore.com.</p><p><b>Gdzie przechowuję dane:</b> w moim systemie do obsługi klientów (Notion). Formularz przesyła dane przez Cloudflare. Ci dostawcy przetwarzają dane w moim imieniu, także poza EOG, na podstawie standardowych klauzul umownych UE.</p><p><b>Jak długo:</b> do wycofania zgody, nie dłużej niż 24 miesiące od ostatniego kontaktu, chyba że dojdzie do współpracy (wtedy zgodnie z przepisami o obrocie nieruchomościami i podatkowymi).</p><p><b>Twoje prawa:</b> dostęp do danych, ich sprostowanie, usunięcie, ograniczenie przetwarzania, przeniesienie, sprzeciw oraz skarga do organu nadzorczego (w Hiszpanii: AEPD, www.aepd.es).</p><p><b>Strona</b> nie używa plików cookies do śledzenia ani reklam. Zapamiętuje tylko Twoje ostatnie kryteria wyszukiwania w Twojej przeglądarce.</p>",
+    "f_phone": "Telefon / WhatsApp",
+    "f_email": "E-mail",
+    "f_consent_mkt": "Wyrażam zgodę na otrzymywanie ofert nieruchomości e-mailem, telefonicznie i przez WhatsApp."
   },
   "es": {
     "lang_name": "Español",
@@ -366,7 +371,7 @@
       "crit_beach": "a menos de 1 km de la playa",
       "ask_offers": "Pregunta por ofertas",
       "wa_hello": "Hola, busco una propiedad en España y me gustaría hablar contigo.",
-      "form_err": "Escribe tu nombre y un teléfono o correo para que pueda responderte.",
+      "form_err": "Escribe tu nombre, teléfono y correo para que pueda responderte.",
       "form_ok": "He abierto WhatsApp con tu mensaje. Solo tienes que pulsar «Enviar».",
       "form_msg": "Hola, me llamo {name}.\nContacto: {contact}\nPresupuesto: {budget}\nZona: {region}\n{msg}",
       "view": "Ver detalles",
@@ -376,7 +381,9 @@
       "f_sending": "Enviando…",
       "f_ok": "¡Gracias! He recibido tu consulta. Te responderé personalmente, normalmente el mismo día.",
       "f_err": "No se ha podido enviar. Escríbeme por WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Marca la casilla de consentimiento para que pueda responderte."
+      "f_err_consent": "Marca las dos casillas para que pueda responderte y enviarte ofertas.",
+      "f_err_email": "Revisa el correo electrónico, por favor.",
+      "f_err_phone": "Revisa el número de teléfono (con prefijo del país)."
     },
     "s_price_from": "Precio mín.",
     "s_price_to": "Precio máx.",
@@ -388,12 +395,15 @@
     "t_house": "Casas (adosados, pareados)",
     "t_villa": "Villas",
     "t_exact": "Tipo exacto",
-    "f_consent": "Acepto el tratamiento de mis datos para responder a mi consulta y presentarme ofertas.",
+    "f_consent": "Acepto el tratamiento de mis datos para responder a mi consulta.",
     "f_or_wa": "o escríbeme directamente por WhatsApp",
     "priv": "Política de privacidad",
     "o_form_msg_ph": "P. ej. disponibilidad, fecha de visita…",
     "pp_title": "Política de privacidad",
-    "pp_body": "<p><b>Responsable del tratamiento:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, España. Contacto: info@indomitore.com, +34 613 15 27 55.</p><p><b>Datos que recojo:</b> nombre, teléfono o correo, presupuesto, zona y el mensaje que escribes en el formulario, además de la referencia de la propiedad sobre la que preguntas.</p><p><b>Finalidad y base legal:</b> responder a tu consulta y presentarte propiedades, con base en tu consentimiento (art. 6.1.a RGPD). Puedes retirarlo en cualquier momento escribiendo a info@indomitore.com.</p><p><b>Dónde se guardan:</b> en mi sistema de gestión de clientes (Notion). El formulario envía los datos a través de Cloudflare. Estos proveedores tratan los datos por encargo mío, también fuera del EEE, con cláusulas contractuales tipo de la UE.</p><p><b>Plazo:</b> hasta que retires tu consentimiento y como máximo 24 meses desde el último contacto, salvo que iniciemos una colaboración (en ese caso, según la normativa inmobiliaria y fiscal).</p><p><b>Tus derechos:</b> acceso, rectificación, supresión, limitación, portabilidad, oposición y reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p><p><b>La web</b> no usa cookies de seguimiento ni publicidad. Solo guarda en tu navegador tus últimos criterios de búsqueda.</p>"
+    "pp_body": "<p><b>Responsable del tratamiento:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, España. Contacto: info@indomitore.com, +34 613 15 27 55.</p><p><b>Datos que recojo:</b> nombre, teléfono, correo electrónico, presupuesto, zona y el mensaje que escribes en el formulario, además de la referencia de la propiedad sobre la que preguntas.</p><p><b>Finalidad y base legal:</b> responder a tu consulta y enviarte ofertas inmobiliarias por correo electrónico, teléfono y WhatsApp, con base en tus consentimientos (art. 6.1.a RGPD; art. 21 LSSI). Puedes retirar cualquiera de ellos en cualquier momento escribiendo a info@indomitore.com.</p><p><b>Dónde se guardan:</b> en mi sistema de gestión de clientes (Notion). El formulario envía los datos a través de Cloudflare. Estos proveedores tratan los datos por encargo mío, también fuera del EEE, con cláusulas contractuales tipo de la UE.</p><p><b>Plazo:</b> hasta que retires tu consentimiento y como máximo 24 meses desde el último contacto, salvo que iniciemos una colaboración (en ese caso, según la normativa inmobiliaria y fiscal).</p><p><b>Tus derechos:</b> acceso, rectificación, supresión, limitación, portabilidad, oposición y reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p><p><b>La web</b> no usa cookies de seguimiento ni publicidad. Solo guarda en tu navegador tus últimos criterios de búsqueda.</p>",
+    "f_phone": "Teléfono / WhatsApp",
+    "f_email": "Correo electrónico",
+    "f_consent_mkt": "Acepto recibir ofertas inmobiliarias por correo electrónico, teléfono y WhatsApp."
   },
   "en": {
     "lang_name": "English",
@@ -564,7 +574,7 @@
       "crit_beach": "within 1 km of the beach",
       "ask_offers": "Ask about listings",
       "wa_hello": "Hello, I'm looking for a property in Spain and would like to talk.",
-      "form_err": "Please enter your name and a phone number or email so I can reply.",
+      "form_err": "Please enter your name, phone and email so I can reply.",
       "form_ok": "I've opened WhatsApp with your message. Just tap “Send”.",
       "form_msg": "Hello, my name is {name}.\nContact: {contact}\nBudget: {budget}\nArea: {region}\n{msg}",
       "view": "View details",
@@ -574,7 +584,9 @@
       "f_sending": "Sending…",
       "f_ok": "Thank you! I've received your enquiry and will reply personally, usually the same day.",
       "f_err": "Sending failed. Please message me on WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Please tick the consent box so I can reply."
+      "f_err_consent": "Please tick both boxes so I can reply and send you offers.",
+      "f_err_email": "Please check your email address.",
+      "f_err_phone": "Please check your phone number (with country code)."
     },
     "s_price_from": "Min price",
     "s_price_to": "Max price",
@@ -586,11 +598,14 @@
     "t_house": "Houses (townhouses, semi-detached)",
     "t_villa": "Villas",
     "t_exact": "Exact type",
-    "f_consent": "I agree to my data being processed to answer my enquiry and send me property offers.",
+    "f_consent": "I agree to my data being processed to answer my enquiry.",
     "f_or_wa": "or message me directly on WhatsApp",
     "priv": "Privacy policy",
     "o_form_msg_ph": "E.g. availability, viewing date…",
     "pp_title": "Privacy policy",
-    "pp_body": "<p><b>Data controller:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, Spain. Contact: info@indomitore.com, +34 613 15 27 55.</p><p><b>Data I collect:</b> your name, phone or email, budget, area and the message you write in the form, plus the reference of the property you ask about.</p><p><b>Purpose and legal basis:</b> to answer your enquiry and present properties, based on your consent (Art. 6(1)(a) GDPR). You can withdraw it at any time by writing to info@indomitore.com.</p><p><b>Where data is stored:</b> in my client management system (Notion). The form sends data via Cloudflare. These providers process data on my behalf, including outside the EEA, under EU standard contractual clauses.</p><p><b>How long:</b> until you withdraw consent and no longer than 24 months after our last contact, unless we start working together (then as required by property and tax law).</p><p><b>Your rights:</b> access, rectification, erasure, restriction, portability, objection, and the right to complain to the Spanish Data Protection Agency (www.aepd.es).</p><p><b>This website</b> uses no tracking or advertising cookies. It only stores your last search criteria in your own browser.</p>"
+    "pp_body": "<p><b>Data controller:</b> Klaudia Szafran, Indómito Real Estate, Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia, Spain. Contact: info@indomitore.com, +34 613 15 27 55.</p><p><b>Data I collect:</b> your name, phone, email, budget, area and the message you write in the form, plus the reference of the property you ask about.</p><p><b>Purpose and legal basis:</b> to answer your enquiry and send you property offers by email, phone and WhatsApp, based on your consents (Art. 6(1)(a) GDPR; Art. 21 of Spain's LSSI). You can withdraw either of them at any time by writing to info@indomitore.com.</p><p><b>Where data is stored:</b> in my client management system (Notion). The form sends data via Cloudflare. These providers process data on my behalf, including outside the EEA, under EU standard contractual clauses.</p><p><b>How long:</b> until you withdraw consent and no longer than 24 months after our last contact, unless we start working together (then as required by property and tax law).</p><p><b>Your rights:</b> access, rectification, erasure, restriction, portability, objection, and the right to complain to the Spanish Data Protection Agency (www.aepd.es).</p><p><b>This website</b> uses no tracking or advertising cookies. It only stores your last search criteria in your own browser.</p>",
+    "f_phone": "Phone / WhatsApp",
+    "f_email": "Email",
+    "f_consent_mkt": "I agree to receive property offers by email, phone and WhatsApp."
   }
 }

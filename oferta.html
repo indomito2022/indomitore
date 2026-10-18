@@ -46,10 +46,12 @@
         <div class="refbox">{{o_ref}} <b>{{o_refno}}</b></div>
         <form class="mini" data-lead data-offer="{{o_refno}}" novalidate>
           <input name="name" autocomplete="name" placeholder="{{f_name}}" aria-label="{{f_name}}" required>
-          <input name="contact" autocomplete="email" placeholder="{{f_contact}}" aria-label="{{f_contact}}" required>
+          <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="{{f_phone}}" aria-label="{{f_phone}}" required>
+          <input name="email" type="email" autocomplete="email" placeholder="{{f_email}}" aria-label="{{f_email}}" required>
           <textarea name="msg" placeholder="{{o_form_msg_ph}}" aria-label="{{f_msg}}"></textarea>
           <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label class="consent"><input type="checkbox" name="consent" required> <span>{{f_consent}} <a href="{{privacy_url}}">{{priv}}</a></span></label>
+          <label class="consent"><input type="checkbox" name="consent_mkt" required> <span>{{f_consent_mkt}}</span></label>
           <button class="btn gold" type="submit">{{f_send}}</button>
           <p class="note" data-note></p>
         </form>

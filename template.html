@@ -157,12 +157,14 @@
     </div>
     <form class="lead" id="leadForm" data-lead novalidate>
       <label>{{f_name}}<input name="name" autocomplete="name" required></label>
-      <label>{{f_contact}}<input name="contact" autocomplete="email" required></label>
+      <label>{{f_phone}}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+48 / +34 …" required></label>
+      <label>{{f_email}}<input name="email" type="email" autocomplete="email" required></label>
       <label>{{f_budget}}<select name="budget"><option value="b1">{{f_b1}}</option><option value="b2">{{f_b2}}</option><option value="b3">{{f_b3}}</option><option value="b4">{{f_b4}}</option></select></label>
-      <label>{{f_region}}<select name="region"><option value="">{{f_dunno}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></label>
+      <label class="full">{{f_region}}<select name="region"><option value="">{{f_dunno}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></label>
       <label class="full">{{f_msg}}<textarea name="msg" placeholder="{{f_msg_ph}}"></textarea></label>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="full consent"><input type="checkbox" name="consent" required> <span>{{f_consent}} <a href="{{privacy_url}}">{{priv}}</a></span></label>
+      <label class="full consent"><input type="checkbox" name="consent_mkt" required> <span>{{f_consent_mkt}}</span></label>
       <div class="full f-actions">
         <button class="btn gold" type="submit">{{f_send}}</button>
         <p class="note" data-note>{{f_note}}</p>
