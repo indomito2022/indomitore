@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Indómito — nowe nieruchomości w Hiszpanii</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/png" href="__LOGO__">
+<meta name="description" content="Nowe domy i apartamenty na Costa Blanca i Costa Cálida dla kupujących z Polski. Klaudia Szafran, Indómito Real Estate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap">
+<style>
+/* Układ: wąska kolumna redakcyjna na górze, potem pełnoszeroka siatka ofert z paskiem filtrów; złoto tylko jako linia i przycisk */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#14110C; --muted:#6B6153; --line:#ECE5D8;
+  --gold:#C9A84C; --gold-text:#8A6B1E; --terra:#B5502E; --on-gold:#14110C;
+  --shadow:0 1px 2px rgba(20,17,12,.06),0 8px 24px rgba(20,17,12,.06);
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --gutter-l:max(16px,env(safe-area-inset-left,0px)); --gutter-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.eyebrow{font:500 11px/1.2 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-text)}
+h1,h2,h3{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+
+/* nagłówek */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;line-height:1}
+.brand img{height:56px;width:auto}
+@media (max-width:760px){.brand img{height:46px}}
+.brand .bw{display:flex;flex-direction:column}
+.brand b{font:700 22px/1 var(--display);letter-spacing:.01em}
+.brand .bw span{font:500 9px/1 var(--body);letter-spacing:.32em;color:var(--gold-text);margin-top:5px}
+nav.links{display:flex;gap:22px;align-items:center;font-size:13px;font-weight:500}
+nav.links a{text-decoration:none;color:var(--muted)}
+nav.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.04em;padding:13px 20px;border-radius:2px;cursor:pointer;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.btn.gold:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.small{padding:10px 14px;font-size:12px}
+@media (max-width:760px){nav.links a:not(.btn){display:none}}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;align-items:end;padding-block:72px 56px}
+.hero h1{font-size:clamp(34px,5.2vw,62px);line-height:1.05}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--gold-text)}
+.hero p.lead{max-width:52ch;color:var(--muted);font-size:16px;margin:22px 0 28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.figure{border-left:2px solid var(--gold);padding:6px 0 6px 28px;display:grid;gap:22px}
+.figure .big{font:700 clamp(56px,8vw,96px)/.9 var(--display);letter-spacing:-.03em}
+.figure .cap{color:var(--muted);font-size:14px;max-width:30ch;margin-top:8px}
+.figure .row{display:flex;gap:28px;flex-wrap:wrap}
+.figure .row div b{display:block;font:700 26px/1.1 var(--display)}
+.figure .row div span{font-size:12px;color:var(--muted)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:40px;padding-block:44px 40px}}
+
+/* filtry */
+#oferty{scroll-margin-top:80px}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 73px);z-index:10;background:var(--bg);border-block:1px solid var(--line)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;padding-block:14px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f label{font:500 10px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.f select{appearance:none;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23998b74' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;border:1px solid var(--line);color:var(--ink);font:500 13px var(--body);padding:9px 30px 9px 11px;border-radius:2px;cursor:pointer;max-width:100%}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;padding:9px 2px;cursor:pointer;user-select:none}
+.chk input{accent-color:var(--gold);width:16px;height:16px;margin:0}
+.count{margin-left:auto;font-size:13px;color:var(--muted);padding-bottom:9px}
+.count b{color:var(--ink);font-weight:600}
+@media (max-width:760px){
+  .bar{position:static}
+  .bar .wrap{display:grid;grid-template-columns:1fr 1fr}
+  .f select{width:100%}
+  .count{grid-column:1/-1;margin-left:0;padding:0}
+}
+
+/* siatka */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:36px 24px;padding-block:32px 24px}
+.card{display:flex;flex-direction:column;gap:12px;cursor:pointer;text-align:left;background:none;border:0;padding:0;color:inherit;font:inherit;min-width:0}
+.ph{position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--line);border-radius:2px}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.card:hover .ph img{transform:scale(1.035)}
+.tag{position:absolute;top:10px;left:10px;font:600 10px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;background:var(--surface);color:var(--ink);border-radius:2px}
+.tag.own{background:var(--terra);color:#fff}
+.ph .n{position:absolute;right:10px;bottom:10px;font:500 11px/1 var(--body);color:#fff;background:rgba(20,17,12,.55);padding:5px 7px;border-radius:2px}
+.card .price{font:700 24px/1 var(--display)}
+.card .ttl{font-size:14px;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted)}
+.meta .place{color:var(--ink);font-weight:600;letter-spacing:.02em}
+.more{display:flex;justify-content:center;padding-block:8px 72px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+
+/* sekcje */
+section.band{border-top:1px solid var(--line)}
+section.band .wrap{padding-block:72px}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
+.sec-head h2{font-size:clamp(28px,3.6vw,40px);line-height:1.1}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;counter-reset:s}
+.steps li{counter-increment:s;border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:8px;align-content:start}
+.steps li::before{content:counter(s);font:700 34px/1 var(--display);color:var(--gold-text)}
+.steps h3{font:600 15px/1.3 var(--body);letter-spacing:.01em}
+.steps p{margin:0;color:var(--muted);font-size:14px}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:56px;align-items:start}
+.about blockquote{margin:0;font:400 italic clamp(24px,3vw,32px)/1.3 var(--display);border-left:2px solid var(--gold);padding-left:24px}
+.about p{margin:0 0 14px;max-width:62ch}
+@media (max-width:860px){.about{grid-template-columns:1fr;gap:28px}}
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:56px}
+.cards-c{display:grid;gap:18px;align-content:start}
+.ci{display:grid;gap:3px}
+.ci span{font:500 10px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.ci b,.ci a{font:600 17px/1.35 var(--body);text-decoration:none;user-select:all;word-break:break-word}
+form.lead{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);padding:28px;border-radius:2px}
+form.lead .full{grid-column:1/-1}
+form.lead label{display:grid;gap:6px;font:500 10px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);min-width:0}
+form.lead input,form.lead textarea,form.lead select{font:400 15px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:11px 12px;width:100%;text-transform:none;letter-spacing:0}
+form.lead textarea{min-height:110px;resize:vertical}
+form.lead .note{font-size:12px;color:var(--muted);text-transform:none;letter-spacing:0;margin:0}
+@media (max-width:860px){.contact{grid-template-columns:1fr;gap:32px}}
+@media (max-width:520px){form.lead{grid-template-columns:1fr;padding:20px}}
+footer{border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:28px}
+
+/* karta oferty */
+dialog{border:0;padding:0;margin:auto;width:min(1040px,100vw);max-height:100dvh;background:var(--bg);color:var(--ink);box-shadow:var(--shadow);border-radius:2px}
+dialog::backdrop{background:rgba(10,8,5,.6)}
+@media (max-width:760px){dialog{width:100vw;height:100dvh;max-height:100dvh;max-width:100vw}}
+.dlg{display:flex;flex-direction:column;max-height:100dvh}
+.dlg-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px var(--gutter-r) 12px var(--gutter-l);padding-top:calc(12px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line)}
+.dlg-top .ref{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.x{background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer}
+.dlg-body{overflow:auto;overscroll-behavior:contain}
+.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:4px;background:var(--ink)}
+.gal img{flex:0 0 100%;width:100%;aspect-ratio:16/10;max-height:62vh;object-fit:cover;scroll-snap-align:start;max-width:100%}
+.galnav{display:flex;justify-content:space-between;align-items:center;padding:10px var(--gutter-r) 0 var(--gutter-l);font-size:12px;color:var(--muted)}
+.galnav button{background:none;border:1px solid var(--line);color:var(--ink);padding:6px 12px;cursor:pointer;border-radius:2px;font:500 12px var(--body)}
+.d-main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;padding:24px var(--gutter-r) 40px var(--gutter-l)}
+.d-main h2{font-size:clamp(24px,3vw,32px);line-height:1.15;margin:6px 0 14px}
+.d-price{font:700 34px/1 var(--display)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0 26px}
+.facts div{background:var(--bg);padding:12px 14px;display:grid;gap:4px}
+.facts span{font:500 10px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts b{font-weight:600;font-size:15px}
+@media (max-width:620px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.desc p{margin:0 0 12px;max-width:68ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.chips li{font-size:12px;font-weight:500;border:1px solid var(--line);padding:6px 10px;border-radius:2px}
+.aside{display:grid;gap:14px;align-content:start;position:sticky;top:16px}
+.ask{border:1px solid var(--line);background:var(--surface);padding:22px;display:grid;gap:12px;border-radius:2px}
+.ask h3{font:700 20px/1.2 var(--display)}
+.ask p{margin:0;font-size:13px;color:var(--muted)}
+.ask .ci b{font-size:15px}
+.maplink{font-size:13px;font-weight:600;color:var(--gold-text)}
+@media (max-width:860px){.d-main{grid-template-columns:1fr}.aside{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Indómito Real Estate, strona główna"><img src="__LOGOFULL__" alt="Indómito Real Estate" width="137" height="56"></a>
+    <nav class="links">
+      <a href="#oferty">Oferty</a>
+      <a href="#jak">Jak kupujemy</a>
+      <a href="#o-mnie">O mnie</a>
+      <a class="btn small" href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Nowe budowy · Costa Blanca &amp; Costa Cálida</div>
+      <h1 style="margin-top:18px">Kupno nieruchomości w Hiszpanii — <em>pewnie, osobiście, bez niespodzianek.</em></h1>
+      <p class="lead">Mieszkam w Hiszpanii od 11 lat. Pomagam Polakom kupić nowy dom lub apartament od dewelopera: od wyboru oferty, przez NIE i bank, aż po notariusza i klucze.</p>
+      <div class="ctas">
+        <a class="btn gold" href="#oferty">Zobacz oferty</a>
+        <a class="btn" id="heroWa" href="#kontakt" target="_blank" rel="noopener">Napisz na WhatsApp</a>
+      </div>
+    </div>
+    <div class="figure">
+      <div>
+        <div class="big num" id="stCount">—</div>
+        <div class="cap">nowych domów i apartamentów od deweloperów, aktualizowanych codziennie</div>
+      </div>
+      <div class="row">
+        <div><b class="num" id="stMin">—</b><span>najniższa cena</span></div>
+        <div><b class="num" id="stTowns">—</b><span>miejscowości</span></div>
+        <div><b class="num" id="stBeach">—</b><span>do 1 km od plaży</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bar" id="oferty">
+  <div class="wrap">
+    <div class="f"><label for="fGrp">Region</label>
+      <select id="fGrp"><option value="">Wszystkie</option><option value="cbn">Costa Blanca Północ</option><option value="cbs">Costa Blanca Południe</option><option value="cc">Costa Cálida</option></select></div>
+    <div class="f"><label for="fType">Typ</label><select id="fType"><option value="">Wszystkie</option></select></div>
+    <div class="f"><label for="fBeds">Sypialnie</label>
+      <select id="fBeds"><option value="0">Dowolnie</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></div>
+    <div class="f"><label for="fPrice">Cena do</label>
+      <select id="fPrice"><option value="0">Bez limitu</option><option value="200000">200 000 €</option><option value="250000">250 000 €</option><option value="300000">300 000 €</option><option value="400000">400 000 €</option><option value="500000">500 000 €</option><option value="750000">750 000 €</option><option value="1000000">1 000 000 €</option></select></div>
+    <div class="f"><label for="fSort">Sortuj</label>
+      <select id="fSort"><option value="new">Najnowsze</option><option value="asc">Cena rosnąco</option><option value="desc">Cena malejąco</option><option value="beach">Najbliżej plaży</option></select></div>
+    <label class="chk" for="fPool"><input type="checkbox" id="fPool"> Basen</label>
+    <label class="chk" for="fBeach"><input type="checkbox" id="fBeach"> Do 1 km od plaży</label>
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>Brak ofert dla tych filtrów. Napisz do mnie, a sprawdzę oferty spoza strony.</div>
+  <div class="more"><button class="btn" id="moreBtn" hidden>Pokaż więcej ofert</button></div>
+</main>
+
+<section class="band" id="jak">
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">Jak kupujemy</div><h2>Od pierwszej rozmowy do kluczy</h2></div>
+    <ol class="steps">
+      <li><h3>Rozmowa i wybór</h3><p>Ustalamy budżet, region i styl życia. Wybieram oferty, oglądamy je na miejscu albo na wideo.</p></li>
+      <li><h3>Rezerwacja i NIE</h3><p>Rezerwujemy nieruchomość u dewelopera. Załatwiamy numer NIE, konto w banku i ewentualny kredyt.</p></li>
+      <li><h3>Umowa i płatności</h3><p>Podpisujesz umowę kupna. Przy budowie w toku płacisz etapami, z gwarancją bankową wpłat.</p></li>
+      <li><h3>Notariusz i klucze</h3><p>Akt notarialny, rejestracja i odbiór kluczy. Zostaję z Tobą także po zakupie.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="o-mnie">
+  <div class="wrap about">
+    <blockquote>Jedna osoba, od pierwszej rozmowy do odbioru kluczy.</blockquote>
+    <div>
+      <div class="eyebrow" style="margin-bottom:14px">Klaudia Szafran · Indómito Real Estate</div>
+      <p>Od 11 lat mieszkam w Hiszpanii, na Costa Blanca. Patrzę na nieruchomości okiem projektantki wnętrz: widzę układ, światło i to, jak będzie się w nich żyło, a nie tylko metry z katalogu.</p>
+      <p>Współpracuję z deweloperami od Dénii po Murcję. Prowadzę klienta po polsku przez cały proces i mówię wprost, co mi się w danej inwestycji nie podoba.</p>
+      <p class="eyebrow" style="margin-top:18px">Licencja RAICV 4368</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="kontakt">
+  <div class="wrap contact">
+    <div>
+      <div class="sec-head"><div class="eyebrow">Kontakt</div><h2>Napisz, czego szukasz</h2></div>
+      <div class="cards-c">
+        <div class="ci"><span>WhatsApp / telefon</span><b>+34 613 15 27 55</b></div>
+        <div class="ci"><span>E-mail</span><b>info@indomitore.com</b></div>
+        <div class="ci"><span>Biuro</span><b>Calle Marqués de Sotelo 5, bajo 5, 46002 Valencia</b></div>
+      </div>
+    </div>
+    <form class="lead" id="leadForm" novalidate>
+      <label>Imię<input id="lName" name="name" autocomplete="name" required></label>
+      <label>Telefon lub e-mail<input id="lContact" name="contact" autocomplete="email" required></label>
+      <label>Budżet<select id="lBudget" name="budget"><option>do 250 000 €</option><option>250–400 tys. €</option><option>400–700 tys. €</option><option>powyżej 700 tys. €</option></select></label>
+      <label>Region<select id="lRegion" name="region"><option>Jeszcze nie wiem</option><option>Costa Blanca Północ</option><option>Costa Blanca Południe</option><option>Costa Cálida</option></select></label>
+      <label class="full">Wiadomość<textarea id="lMsg" name="msg" placeholder="Np. szukam apartamentu z basenem blisko plaży, na wakacje i pod wynajem."></textarea></label>
+      <div class="full" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <button class="btn gold" type="submit">Wyślij przez WhatsApp</button>
+        <p class="note" id="formNote">Otworzy się WhatsApp z gotową wiadomością do mnie.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>© <span id="yr"></span> Indómito Real Estate · Klaudia Szafran · RAICV 4368</span>
+  <span>Oferty pochodzą od deweloperów i są aktualizowane codziennie (ostatnio: <span id="stUpd"></span>). Ceny i dostępność mogą się zmienić.</span>
+</div></footer>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="dlg">
+    <div class="dlg-top"><span class="ref" id="dRef"></span><button class="x" id="dClose" aria-label="Zamknij">×</button></div>
+    <div class="dlg-body" id="dBody"></div>
+  </div>
+</dialog>
+
+<script>
+const DATA = /*__DATA__*/[];
+const STATS = /*__STATS__*/{};
+const DETAILS = /*__DETAILS__*/null;
+const WA = "34613152755";
+const PAGE = 24;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtPrice = p => p ? new Intl.NumberFormat("pl-PL").format(p) + " €" : "Cena na zapytanie";
+const fmtBeach = m => !m ? "" : m < 1000 ? `${m} m do plaży` : `${(m/1000).toLocaleString("pl-PL",{maximumFractionDigits:1})} km do plaży`;
+const waLink = t => `https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
+const pl = (n, one, few, many) => n === 1 ? one : (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? few : many;
+
+// statystyki
+$("#stCount").textContent = new Intl.NumberFormat("pl-PL").format(STATS.count || DATA.length);
+$("#stMin").textContent = fmtPrice(STATS.minPrice);
+$("#stTowns").textContent = STATS.towns || "—";
+$("#stBeach").textContent = STATS.beach1km ?? "—";
+$("#stUpd").textContent = STATS.updated || "";
+$("#yr").textContent = new Date().getFullYear();
+$("#heroWa").href = waLink("Dzień dobry, szukam nieruchomości w Hiszpanii i chciałbym/chciałabym porozmawiać.");
+
+// typy do filtra
+[...new Set(DATA.map(d => d.type).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"pl")).forEach(t => {
+  const o = document.createElement("option"); o.value = o.textContent = t; $("#fType").append(o);
+});
+
+let shown = PAGE, list = [];
+const ids = ["fGrp","fType","fBeds","fPrice","fSort","fPool","fBeach"];
+function filters(){
+  return { grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, price:+$("#fPrice").value,
+           sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked };
+}
+function apply(reset=true){
+  const f = filters();
+  list = DATA.filter(d =>
+    (!f.grp || d.grp === f.grp) && (!f.type || d.type === f.type) && d.beds >= f.beds &&
+    (!f.price || d.price <= f.price) && (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)));
+  if (f.sort === "asc") list.sort((a,b)=>a.price-b.price);
+  else if (f.sort === "desc") list.sort((a,b)=>b.price-a.price);
+  else if (f.sort === "beach") list.sort((a,b)=>(a.beach||1e9)-(b.beach||1e9));
+  if (reset) shown = PAGE;
+  render();
+  try { localStorage.setItem("ind-filters", JSON.stringify(f)); } catch(e) {}
+}
+function card(d){
+  const tag = d.src === "indomito" ? `<span class="tag own">${d.reserved ? "Zarezerwowana" : "Oferta Indómito"}</span>`
+            : d.pool ? `<span class="tag">Basen</span>` : "";
+  return `<button class="card" type="button" data-ref="${esc(d.ref)}" aria-label="${esc(d.title)}, ${esc(fmtPrice(d.price))}">
+    <div class="ph"><img src="${esc(d.img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">${tag}<span class="n">${d.n} zdjęć</span></div>
+    <div class="price num">${esc(fmtPrice(d.price))}</div>
+    <div class="ttl">${esc(d.title)}</div>
+    <div class="meta"><span class="place">${esc(d.town)}</span><span>${esc(d.type)}</span>
+      ${d.beds ? `<span>${d.beds} ${pl(d.beds,"sypialnia","sypialnie","sypialni")}</span>` : ""}
+      ${d.m2 ? `<span class="num">${d.m2} m²</span>` : ""}${d.beach ? `<span>${esc(fmtBeach(d.beach))}</span>` : ""}</div>
+  </button>`;
+}
+function render(){
+  $("#grid").innerHTML = list.slice(0, shown).map(card).join("");
+  $("#empty").hidden = list.length > 0;
+  $("#moreBtn").hidden = shown >= list.length;
+  $("#count").innerHTML = `<b class="num">${new Intl.NumberFormat("pl-PL").format(list.length)}</b> ${pl(list.length,"oferta","oferty","ofert")}`;
+}
+ids.forEach(id => $("#"+id).addEventListener("change", () => apply()));
+$("#moreBtn").addEventListener("click", () => { shown += PAGE; render(); });
+$("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openOffer(c.dataset.ref); });
+
+// przywróć filtry
+try {
+  const s = JSON.parse(localStorage.getItem("ind-filters") || "null");
+  if (s) { $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0; $("#fPrice").value=s.price||0;
+           $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; }
+} catch(e) {}
+apply();
+
+// karta oferty
+const dlg = $("#dlg");
+async function getDetail(ref){
+  if (DETAILS) return DETAILS[ref];
+  const r = await fetch(`o/${encodeURIComponent(ref.replace(/[^\w.-]/g,"_"))}.json`);
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function openOffer(ref, push=true){
+  const s = DATA.find(d => d.ref === ref); if (!s) return;
+  $("#dRef").textContent = `Ref. ${ref}`;
+  $("#dBody").innerHTML = `<div style="padding:60px 24px;text-align:center;color:var(--muted)">Wczytuję ofertę…</div>`;
+  if (!dlg.open) dlg.showModal();
+  if (push) history.replaceState(null, "", "#oferta-" + ref);
+  let d;
+  try { d = await getDetail(ref); } catch(e) {
+    $("#dBody").innerHTML = `<div style="padding:60px 24px;text-align:center">Nie udało się wczytać szczegółów. Odśwież stronę albo napisz do mnie: +34 613 15 27 55.</div>`; return;
+  }
+  const msg = `Dzień dobry, interesuje mnie oferta ${ref}: ${s.title} (${s.town}, ${fmtPrice(s.price)}). Proszę o więcej informacji.`;
+  const facts = [["Typ",s.type],["Miejscowość",s.town + (d.area && d.area!==s.town ? ", "+d.area : "")],["Sypialnie",s.beds||"—"],["Łazienki",s.baths||"—"],
+    ["Powierzchnia",s.m2 ? s.m2+" m²" : "—"],["Działka",d.plot ? d.plot+" m²" : "—"],["Do plaży",s.beach ? fmtBeach(s.beach).replace(" do plaży","") : "—"],["Region",s.region]];
+  const map = d.lat && d.lng ? `<a class="maplink" href="https://www.google.com/maps?q=${d.lat},${d.lng}" target="_blank" rel="noopener">Zobacz okolicę na mapie →</a>` : "";
+  $("#dBody").innerHTML = `
+    <div class="gal" id="gal">${d.imgs.map((u,i)=>`<img src="${esc(u)}" alt="Zdjęcie ${i+1} z ${d.imgs.length}" loading="${i<2?"eager":"lazy"}" referrerpolicy="no-referrer">`).join("")}</div>
+    <div class="galnav"><button type="button" id="gPrev">← Poprzednie</button><span id="gNum" class="num">1 / ${d.imgs.length}</span><button type="button" id="gNext">Następne →</button></div>
+    <div class="d-main">
+      <div>
+        <div class="eyebrow">${esc(s.region)}</div>
+        <h2 id="dTitle">${esc(s.title)}</h2>
+        <div class="d-price num">${esc(fmtPrice(s.price))}</div>
+        <div class="facts">${facts.map(([k,v])=>`<div><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>
+        <div class="desc">${(d.desc||[]).map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+        ${d.feats && d.feats.length ? `<ul class="chips">${d.feats.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>` : ""}
+      </div>
+      <aside class="aside">
+        <div class="ask">
+          <h3>Zapytaj o tę ofertę</h3>
+          <p>Odpowiadam osobiście. Numer oferty: <b>${esc(ref)}</b>.</p>
+          <a class="btn gold" href="${waLink(msg)}" target="_blank" rel="noopener">Napisz na WhatsApp</a>
+          <div class="ci"><span>Telefon</span><b>+34 613 15 27 55</b></div>
+          <div class="ci"><span>E-mail</span><b>info@indomitore.com</b></div>
+        </div>
+        ${map}
+      </aside>
+    </div>`;
+  const gal = $("#gal"), n = d.imgs.length;
+  const idx = () => Math.round(gal.scrollLeft / gal.clientWidth);
+  gal.addEventListener("scroll", () => { $("#gNum").textContent = `${idx()+1} / ${n}`; }, {passive:true});
+  $("#gPrev").onclick = () => gal.scrollTo({left: Math.max(0, idx()-1) * gal.clientWidth, behavior:"smooth"});
+  $("#gNext").onclick = () => gal.scrollTo({left: Math.min(n-1, idx()+1) * gal.clientWidth, behavior:"smooth"});
+  $("#dBody").scrollTop = 0;
+}
+function closeOffer(){ if (dlg.open) dlg.close(); }
+$("#dClose").addEventListener("click", closeOffer);
+dlg.addEventListener("click", e => { if (e.target === dlg) closeOffer(); });
+dlg.addEventListener("close", () => { if (location.hash.startsWith("#oferta-")) history.replaceState(null, "", location.pathname + location.search); });
+const fromHash = () => { const m = location.hash.match(/^#oferta-(.+)$/); if (m) openOffer(decodeURIComponent(m[1]), false); };
+window.addEventListener("hashchange", fromHash); fromHash();
+
+// formularz -> WhatsApp
+$("#leadForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#lName").value.trim(), contact = $("#lContact").value.trim();
+  if (!name || !contact) { $("#formNote").textContent = "Wpisz imię i telefon lub e-mail, żebym mogła odpowiedzieć."; $("#formNote").style.color = "var(--terra)"; return; }
+  const t = `Dzień dobry, nazywam się ${name}.\nKontakt: ${contact}\nBudżet: ${$("#lBudget").value}\nRegion: ${$("#lRegion").value}\n${$("#lMsg").value.trim()}`;
+  window.open(waLink(t), "_blank", "noopener") || (location.href = waLink(t));
+  $("#formNote").textContent = "Otworzyłam WhatsApp z Twoją wiadomością. Wystarczy kliknąć „Wyślij”."; $("#formNote").style.color = "";
+});
+</script>
+</body>
+</html>
