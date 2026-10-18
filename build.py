@@ -38,6 +38,14 @@ FALLBACK = {"pl": ["pl", "en", "es"], "es": ["es", "en", "pl"], "en": ["en", "es
 HOME = {"pl": "", "es": "es/", "en": "en/"}
 OFFER_DIR = {"pl": "oferta/", "es": "es/propiedad/", "en": "en/property/"}
 T = json.load(open(os.path.join(ROOT, "teksty.json"), encoding="utf-8"))
+FLAGS = {  # flagi w przełączniku języka (proste SVG, bez plików)
+    "pl": '<svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#DC143C"/></svg>',
+    "es": '<svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/></svg>',
+    "en": '<svg class="flag" viewBox="0 0 60 40" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><clipPath id="ukc"><rect width="60" height="40"/></clipPath>'
+          '<g clip-path="url(#ukc)"><rect width="60" height="40" fill="#012169"/><path d="M0,0 60,40M60,0 0,40" stroke="#fff" stroke-width="8"/>'
+          '<path d="M0,0 60,40M60,0 0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0v40M0,20h60" stroke="#fff" stroke-width="12"/>'
+          '<path d="M30,0v40M0,20h60" stroke="#C8102E" stroke-width="7"/></g></svg>',
+}
 
 TYPES = {  # typ z feedu -> (pl, es, en)
     "Villa": ("Willa", "Villa", "Villa"), "Apartment": ("Apartament", "Apartamento", "Apartment"),
@@ -361,12 +369,13 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
     for l in LANGS:
         href = (base + paths[l]) or "./"
         cur = ' aria-current="true"' if l == lang else ""
-        langs.append(f'<a href="{E(href)}" hreflang="{l}" lang="{l}"{cur}>{l.upper()}</a>')
+        langs.append(f'<a href="{E(href)}" hreflang="{l}" lang="{l}" title="{E(T[l]["lang_name"])}"{cur}>'
+                     f'{FLAGS[l]}<span class="lc">{l.upper()}</span></a>')
     alts = "\n".join(f'<link rel="alternate" hreflang="{l}" href="{SITE}{paths[l]}">' for l in LANGS)
     alts += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}{paths["pl"]}">'
     ctx.update({
         "lang": lang, "base": base, "home": home, "ver": ver, "year": datetime.now().year,
-        "langs": '<span aria-hidden="true">·</span>'.join(langs), "alternates": alts,
+        "langs": "".join(langs), "alternates": alts,
         "canonical": SITE + paths[lang], "wa_link": E(wa_link(extra_wa)),
         "footer_offers": T[lang]["footer_offers"].replace("{d}", stats["updated"]),
     })

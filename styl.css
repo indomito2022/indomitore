@@ -206,12 +206,16 @@ footer .fl{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:flex-end}
 .wa-float:hover{background:#2a241b}
 @media (max-width:560px){.wa-float span{display:none}.wa-float{padding:10px}}
 
-/* przełącznik języka */
-.langs{display:flex;align-items:center;gap:2px;font:600 11px/1 var(--body);letter-spacing:.12em}
-.langs a{text-decoration:none;color:var(--muted);padding:8px 6px}
-.langs a[aria-current]{color:var(--gold-text)}
-.langs a:hover{color:var(--ink)}
-.langs span{color:var(--line)}
+/* przełącznik języka: flagi */
+.langs{display:flex;align-items:center;gap:6px}
+.langs a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;padding:4px;border-radius:3px;opacity:.55;transition:opacity .2s}
+.langs a:hover{opacity:1}
+.langs a[aria-current]{opacity:1}
+.langs .flag{width:26px;height:17px;display:block;border-radius:2px;box-shadow:0 0 0 1px rgba(20,17,12,.14)}
+.langs a[aria-current] .flag{box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--gold)}
+.langs .lc{font:600 9px/1 var(--body);letter-spacing:.12em;color:var(--muted)}
+.langs a[aria-current] .lc{color:var(--gold-text)}
+@media (max-width:560px){.langs{gap:2px}.langs .lc{display:none}.langs .flag{width:24px;height:16px}}
 .head-r{display:flex;align-items:center;gap:22px}
 @media (max-width:900px){.head-r{gap:10px}}
 .card{text-decoration:none}
