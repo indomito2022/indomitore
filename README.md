@@ -47,3 +47,23 @@ Dane właściciela i prowizja nie trafiają na stronę. Generator czyta tylko po
 python3 build.py --feed feed.xml --out dist      # z pobranego pliku XML
 python3 build.py --sample data/sample.json --inline --out preview   # próbka 36 ofert
 ```
+
+## Oferty wyróżnione
+
+Sekcja „Oferty wyróżnione” pod wyszukiwarką. Kolejność wyboru:
+1. numery ofert z pliku `wyroznione.txt` (np. `N10053`, jeden w linii; edycja na GitHubie → ołówek → Commit),
+2. oferty bezpośrednie z Notion (jeśli w bazie dodasz pole wyboru **Wyróżniona**, pokażą się tylko zaznaczone),
+3. jeśli brakuje, strona sama dobiera prawdziwe oferty z feedu (basen, do 1 km od plaży, dużo zdjęć).
+
+## Wideo w tle (sekcja otwierająca)
+
+Wgraj do repozytorium (Add file → Upload files):
+- `hero.mp4` — wideo poziome 16:9, bez dźwięku, 10–20 s, 1920×1080 lub 1280×720, najlepiej do 8 MB,
+- opcjonalnie `hero.webm` (lżejsza wersja), `hero-mobile.mp4` (pionowy/kwadratowy kadr na telefon),
+- opcjonalnie `hero.jpg` — kadr z filmu, pokazywany na telefonie i zanim wideo się wczyta.
+
+Bez tych plików w tle jest zdjęcie pierwszej oferty wyróżnionej. Na telefonie domyślnie zdjęcie (szybciej), a wideo tylko gdy jest `hero-mobile.mp4`.
+
+## Zdjęcie w sekcji „O mnie”
+
+Wgraj do repozytorium plik `portret.jpg` (kwadratowe zdjęcie, min. 800×800 px, twarz na środku). Pojawi się w okrągłej złotej ramce. Bez pliku sekcja wyświetla się bez zdjęcia.

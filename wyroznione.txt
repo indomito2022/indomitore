@@ -1,0 +1,5 @@
+# Oferty wyróżnione na stronie głównej (maks. 6).
+# Wpisz numery ofert (Ref., np. N10053), jeden w linii. Kolejność = kolejność na stronie.
+# Gdy plik jest pusty, strona sama wybiera prawdziwe oferty z feedu:
+# najnowsze z basenem, do 1 km od plaży, z dużą liczbą zdjęć, każda z innej miejscowości.
+# Oferty z Notion („Moja oferta bezpośrednia”) trafiają tu automatycznie.

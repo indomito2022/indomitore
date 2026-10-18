@@ -173,6 +173,7 @@ def fetch_notion(token, db_id, dist):
             "beach": 0, "pool": any("Basen" in a for a in amen), "lat": None, "lng": None,
             "title": txt("Nazwa"), "desc": clean_desc(txt("Opis")), "feats": amen, "imgs": imgs,
             "reserved": (pr.get("Status", {}).get("status") or {}).get("name") == "Zarezerwowana",
+            "featured": bool(pr.get("Wyróżniona", {}).get("checkbox")),
         })
     return out
 
@@ -182,11 +183,96 @@ def summary(p):
     s = {k: p[k] for k in ("ref", "src", "price", "type", "town", "grp", "region", "beds", "baths", "m2", "beach", "pool")}
     s["title"] = p["title"]; s["img"] = p["imgs"][0]; s["n"] = len(p["imgs"])
     if p.get("reserved"): s["reserved"] = True
+    if p.get("feat"): s["feat"] = p["feat"]
     return s
 
 
 def detail(p):
     return {k: p[k] for k in ("ref", "area", "plot", "lat", "lng", "desc", "feats", "imgs")}
+
+
+FEATURED_MAX = 6
+
+
+def read_featured_refs():
+    """wyroznione.txt: jeden numer oferty (REF) w linii, kolejność = kolejność na stronie. # = komentarz."""
+    path = os.path.join(ROOT, "wyroznione.txt")
+    if not os.path.exists(path):
+        return []
+    refs = []
+    for line in open(path, encoding="utf-8"):
+        line = line.split("#", 1)[0].strip()
+        if line and line not in refs:
+            refs.append(line)
+    return refs
+
+
+def pick_featured(props):
+    """Oferty wyróżnione, tylko z prawdziwych ofert:
+    1) numery z wyroznione.txt, 2) oferty z Notion zaznaczone jako Wyróżniona (albo wszystkie oferty Indómito),
+    3) jeśli nadal brakuje: automatycznie najnowsze oferty z basenem do 1 km od plaży i z dużą liczbą zdjęć,
+       każda z innej miejscowości."""
+    by_ref = {p["ref"]: p for p in props}
+    chosen = []
+    def add(p):
+        if p and p not in chosen and len(chosen) < FEATURED_MAX:
+            chosen.append(p)
+    manual = read_featured_refs()
+    for ref in manual:
+        if ref not in by_ref:
+            print(f"  ! wyroznione.txt: brak oferty {ref} w feedzie (pomijam)", file=sys.stderr)
+        add(by_ref.get(ref))
+    own = [p for p in props if p["src"] == "indomito" and not p.get("reserved")]
+    for p in [p for p in own if p.get("featured")] or own:
+        add(p)
+    if len(chosen) < 3:
+        towns = {p["town"] for p in chosen}
+        for p in props:
+            if len(chosen) >= FEATURED_MAX: break
+            if p["src"] == "redsp" and p["pool"] and 0 < p["beach"] <= 1000 and len(p["imgs"]) >= 12 \
+                    and p["price"] and p["town"] not in towns:
+                add(p); towns.add(p["town"])
+    for i, p in enumerate(chosen, 1):
+        p["feat"] = i
+    return chosen
+
+
+def headline_count(n):
+    """Liczba do nagłówka „Ponad … ofert”: zaokrąglona w dół, nigdy zawyżona."""
+    if n >= 1000: return f"{n // 1000 * 1000}"
+    if n >= 100: return f"{n // 100 * 100}"
+    return str(n)
+
+
+def asset(n):
+    return next((p for p in (os.path.join(ROOT, "assets", n), os.path.join(ROOT, n)) if os.path.exists(p)), "")
+
+
+def copy_static(dist, featured):
+    """Favicon, ikona na telefon i (jeśli są w repo) wideo do sekcji otwierającej."""
+    out = {}
+    for name, dst in (("logo-kon.png", "favicon.png"), ("apple-touch-icon.png", "apple-touch-icon.png"),
+                      ("logo-pelne.png", "logo-pelne.png")):
+        src = asset(name)
+        if src:
+            shutil.copyfile(src, os.path.join(dist, dst)); out[name] = dst
+    for name in ("portret.jpg", "portret.webp", "portret.png"):
+        src = asset(name)
+        if src:
+            shutil.copyfile(src, os.path.join(dist, name)); out["portret"] = name; break
+    hero = {"video": [], "mobile": []}
+    for name, typ, key in (("hero.webm", "video/webm", "video"), ("hero.mp4", "video/mp4", "video"),
+                           ("hero-mobile.mp4", "video/mp4", "mobile")):
+        src = asset(name)
+        if src:
+            shutil.copyfile(src, os.path.join(dist, name)); hero[key].append([name, typ])
+    for name in ("hero.jpg", "hero.webp", "hero.png"):
+        src = asset(name)
+        if src:
+            shutil.copyfile(src, os.path.join(dist, name)); hero["poster"] = name; break
+    if "poster" not in hero and featured:
+        hero["poster"] = featured[0]["imgs"][0]
+    return out, hero
 
 
 def build(props, dist, inline=False):
@@ -195,8 +281,9 @@ def build(props, dist, inline=False):
     # oferty Indómito na początek, potem najtańsze nowości wg daty z feedu (kolejność feedu)
     props.sort(key=lambda p: 0 if p["src"] == "indomito" else 1)
     feed = [p for p in props if p["src"] == "redsp"]
+    featured = pick_featured(props)
     stats = {
-        "count": len(props), "minPrice": min((p["price"] for p in props if p["price"]), default=0),
+        "count": len(props), "dev": len(feed), "minPrice": min((p["price"] for p in props if p["price"]), default=0),
         "towns": len({p["town"] for p in props}),
         "updated": datetime.now(timezone.utc).astimezone().strftime("%d.%m.%Y"),
         "beach1km": sum(1 for p in feed if 0 < p["beach"] <= 1000),
@@ -211,18 +298,18 @@ def build(props, dist, inline=False):
     page = (tpl.replace("/*__DATA__*/[]", js([summary(p) for p in props]))
                .replace("/*__STATS__*/{}", js(stats))
                .replace("/*__DETAILS__*/null", js(details) if inline else "null"))
-    import base64
-    asset = lambda n: next((p for p in (os.path.join(ROOT, "assets", n), os.path.join(ROOT, n)) if os.path.exists(p)), "")
-    logo = asset("logo-kon.png")
-    if logo:
-        page = page.replace("__LOGO__", "data:image/png;base64," + base64.b64encode(open(logo, "rb").read()).decode())
-    logo_full = asset("logo-pelne.png")
-    if logo_full:
-        page = page.replace("__LOGOFULL__", "data:image/png;base64," + base64.b64encode(open(logo_full, "rb").read()).decode())
+    files, hero = copy_static(dist, featured)
+    page = (page.replace("/*__HERO__*/{}", js(hero))
+                .replace("__DEVCOUNT__", headline_count(len(feed)))
+                .replace("__LOGO__", files.get("logo-kon.png", ""))
+                .replace("__TOUCHICON__", files.get("apple-touch-icon.png", files.get("logo-kon.png", "")))
+                .replace("__LOGOFULL__", files.get("logo-pelne.png", ""))
+                .replace("__PORTRAIT__", files.get("portret", "")))
     with open(os.path.join(dist, "index.html"), "w", encoding="utf-8") as f:
         f.write(page)
     with open(os.path.join(dist, "CNAME"), "w") as f:
         f.write(DOMAIN + "\n")
+    print(f"Wyróżnione: {', '.join(p['ref'] for p in featured) or 'brak'}; wideo: {'tak' if hero['video'] else 'nie'}")
     print(f"OK: {len(props)} ofert -> {dist}/index.html ({os.path.getsize(os.path.join(dist,'index.html'))//1024} KB)")
 
 
