@@ -44,7 +44,16 @@
         <h3>{{o_ask_h}}</h3>
         <p>{{o_ask_p}}</p>
         <div class="refbox">{{o_ref}} <b>{{o_refno}}</b></div>
-        <a class="btn gold" href="{{o_wa}}" target="_blank" rel="noopener">{{wa_btn}}</a>
+        <form class="mini" data-lead data-offer="{{o_refno}}" novalidate>
+          <input name="name" autocomplete="name" placeholder="{{f_name}}" aria-label="{{f_name}}" required>
+          <input name="contact" autocomplete="email" placeholder="{{f_contact}}" aria-label="{{f_contact}}" required>
+          <textarea name="msg" placeholder="{{o_form_msg_ph}}" aria-label="{{f_msg}}"></textarea>
+          <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label class="consent"><input type="checkbox" name="consent" required> <span>{{f_consent}} <a href="{{privacy_url}}">{{priv}}</a></span></label>
+          <button class="btn gold" type="submit">{{f_send}}</button>
+          <p class="note" data-note></p>
+        </form>
+        <a class="btn" href="{{o_wa}}" target="_blank" rel="noopener">{{wa_btn}}</a>
         <div class="ci"><span>{{c_phone}}</span><a href="tel:+34613152755">+34 613 15 27 55</a></div>
         <div class="ci"><span>{{c_email}}</span><a href="mailto:info@indomitore.com?subject={{o_mail_subj}}">info@indomitore.com</a></div>
       </div>

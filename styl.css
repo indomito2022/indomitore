@@ -297,3 +297,21 @@ dialog.lb::backdrop{background:#0f0d0a}
 .nf h1{font-size:clamp(32px,4vw,52px)}
 .nf p{color:var(--muted);max-width:52ch;margin:0}
 .op-head .loc{white-space:normal}
+
+/* formularze zapytań */
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.consent{display:flex!important;flex-direction:row!important;gap:10px!important;align-items:flex-start;font:400 12px/1.5 var(--body)!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)}
+.consent input{width:16px!important;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--gold);padding:0!important}
+.consent a{color:var(--gold-text)}
+.f-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.wa-alt{font:600 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text);text-decoration:none}
+form.mini{display:grid;gap:10px}
+form.mini input:not([type=checkbox]),form.mini textarea{font:400 14px var(--body);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:2px;padding:11px 12px;width:100%}
+form.mini textarea{min-height:76px;resize:vertical}
+form.mini .note{margin:0;font-size:13px;color:var(--muted)}
+form.mini .note:empty{display:none}
+button:disabled{opacity:.6;cursor:wait}
+.legal{max-width:780px;padding-block:72px 96px}
+.legal h1{font-size:clamp(32px,4vw,48px);margin:14px 0 30px}
+.legal p{color:var(--ink-2);margin:0 0 16px}
+footer a{color:inherit}

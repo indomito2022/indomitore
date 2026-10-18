@@ -37,6 +37,8 @@ LANGS = ["pl", "es", "en"]
 FALLBACK = {"pl": ["pl", "en", "es"], "es": ["es", "en", "pl"], "en": ["en", "es", "pl"]}
 HOME = {"pl": "", "es": "es/", "en": "en/"}
 OFFER_DIR = {"pl": "oferta/", "es": "es/propiedad/", "en": "en/property/"}
+PRIVACY = {"pl": "polityka-prywatnosci/", "es": "es/privacidad/", "en": "en/privacy/"}
+FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "https://indomito-formularz.klaudia-304.workers.dev/")  # Cloudflare → Notion
 T = json.load(open(os.path.join(ROOT, "teksty.json"), encoding="utf-8"))
 FLAGS = {  # flagi w przełączniku języka (proste SVG, bez plików)
     "pl": '<svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#DC143C"/></svg>',
@@ -398,7 +400,12 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
         "langs": "".join(langs), "alternates": alts,
         "canonical": SITE + paths[lang], "wa_link": E(wa_link(extra_wa)),
         "footer_offers": T[lang]["footer_offers"].replace("{d}", stats["updated"]),
+        "privacy_url": base + PRIVACY[lang],
     })
+    j = T[lang]["js"]
+    ctx["form_cfg"] = json.dumps({"lang": lang, "endpoint": FORM_ENDPOINT, "sending": j["f_sending"], "ok": j["f_ok"],
+                                  "err": j["f_err"], "err_consent": j["f_err_consent"], "err_missing": j["form_err"]},
+                                 ensure_ascii=False).replace("</", "<\\/")
     ctx["HEAD"] = render(read("glowa.html"), ctx)
     ctx["HEADER"] = render(read("naglowek.html"), ctx)
     ctx["FOOTER"] = render(read("stopka.html"), ctx)
@@ -545,6 +552,15 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
     return page, out
 
 
+def privacy_page(lang, stats, ver):
+    page = PRIVACY[lang]
+    ctx = common_ctx(lang, page, dict(PRIVACY), T[lang]["js"]["wa_hello"], stats, ver)
+    t = T[lang]
+    body = f'<main class="wrap legal"><div class="eyebrow">Indómito Real Estate</div><h1>{E(t["pp_title"])}</h1>{t["pp_body"]}</main>'
+    return page, (f'<!doctype html><html lang="{lang}"><head>{ctx["HEAD"]}<title>{E(t["pp_title"])} | Indómito</title>'
+                  f'<link rel="canonical" href="{SITE}{page}"></head><body>{ctx["HEADER"]}{body}{ctx["FOOTER"]}</body></html>')
+
+
 def not_found_page(stats, ver):
     lang = "pl"
     paths = dict(HOME)
@@ -565,7 +581,7 @@ def asset(n):
 def copy_static(dist, featured):
     """Style, favicon, ikona na telefon, logo i (jeśli są w repo) portret i wideo do sekcji otwierającej."""
     out = {}
-    for name, dst in (("styl.css", "styl.css"), ("logo-kon.png", "favicon.png"), ("apple-touch-icon.png", "apple-touch-icon.png"),
+    for name, dst in (("styl.css", "styl.css"), ("formularz.js", "formularz.js"), ("logo-kon.png", "favicon.png"), ("apple-touch-icon.png", "apple-touch-icon.png"),
                       ("logo-pelne.png", "logo-pelne.png")):
         s = asset(name)
         if s:
@@ -617,6 +633,9 @@ def build(props, dist):
         for p in props:
             page, out = offer_page(p, lang, props, stats, ver, tpl_offer)
             write(dist, page, out); urls.append(page)
+    for lang in LANGS:
+        page, out = privacy_page(lang, stats, ver)
+        write(dist, page, out); urls.append(page)
     write(dist, "404.html", not_found_page(stats, ver))
     with open(os.path.join(dist, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
