@@ -30,7 +30,7 @@ export default {
     const name = clean(d.name, 120), phone = clean(d.phone, 40), email = clean(d.email, 120);
     if (!name || !phone || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || phone.replace(/\D/g, "").length < 9)
       return out(400, { ok: false, error: "missing" });
-    if (d.consent !== true || d.consent_mkt !== true) return out(400, { ok: false, error: "consent" });
+    if (d.consent !== true) return out(400, { ok: false, error: "consent" });
 
     const today = new Date().toISOString().slice(0, 10);
     const notes = [
@@ -39,7 +39,7 @@ export default {
       d.offer && `Oferta: ${clean(d.offer, 40)}`,
       d.page && `Strona: ${clean(d.page, 300)}`,
       `Zgoda RODO (odpowiedź na zapytanie): tak (${today})`,
-      `Zgoda na otrzymywanie ofert (e-mail, telefon, WhatsApp): tak (${today})`,
+      `Zgoda na otrzymywanie ofert (e-mail, telefon, WhatsApp): ${d.consent_mkt === true ? `tak (${today})` : "nie"}`,
     ].filter(Boolean).join("\n");
 
     const p = {
@@ -53,7 +53,7 @@ export default {
       "Data następnego kroku": { date: { start: today } },
       "Następny krok": { rich_text: txt("Odpowiedzieć na zapytanie ze strony") },
       "Notatki": { rich_text: txt(notes) },
-      "Zgoda na oferty": { checkbox: true },
+      "Zgoda na oferty": { checkbox: d.consent_mkt === true },
     };
     if (LANG[d.lang]) p["Język"] = { select: { name: LANG[d.lang] } };
     const b = BUDGET[d.budget];

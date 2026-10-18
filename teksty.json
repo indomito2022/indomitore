@@ -178,7 +178,7 @@
       "f_sending": "Wysyłam…",
       "f_ok": "Dziękuję! Zapytanie dotarło. Odezwę się osobiście, zwykle tego samego dnia.",
       "f_err": "Nie udało się wysłać. Napisz proszę na WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Zaznacz obie zgody, żebym mogła odpowiedzieć i przesłać Ci oferty.",
+      "f_err_consent": "Zaznacz zgodę na przetwarzanie danych, żebym mogła odpowiedzieć.",
       "f_err_email": "Sprawdź proszę adres e-mail.",
       "f_err_phone": "Sprawdź proszę numer telefonu (z kierunkowym kraju)."
     },
@@ -381,7 +381,7 @@
       "f_sending": "Enviando…",
       "f_ok": "¡Gracias! He recibido tu consulta. Te responderé personalmente, normalmente el mismo día.",
       "f_err": "No se ha podido enviar. Escríbeme por WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Marca las dos casillas para que pueda responderte y enviarte ofertas.",
+      "f_err_consent": "Marca la casilla de consentimiento para que pueda responderte.",
       "f_err_email": "Revisa el correo electrónico, por favor.",
       "f_err_phone": "Revisa el número de teléfono (con prefijo del país)."
     },
@@ -584,7 +584,7 @@
       "f_sending": "Sending…",
       "f_ok": "Thank you! I've received your enquiry and will reply personally, usually the same day.",
       "f_err": "Sending failed. Please message me on WhatsApp: +34 613 15 27 55.",
-      "f_err_consent": "Please tick both boxes so I can reply and send you offers.",
+      "f_err_consent": "Please tick the consent box so I can reply.",
       "f_err_email": "Please check your email address.",
       "f_err_phone": "Please check your phone number (with country code)."
     },

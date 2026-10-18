@@ -12,13 +12,13 @@
       if (!v("name") || !v("phone") || !v("email")) return say(C.err_missing, true);
       if (!okPhone(v("phone"))) { f.elements.phone.focus(); return say(C.err_phone, true); }
       if (!okEmail(v("email"))) { f.elements.email.focus(); return say(C.err_email, true); }
-      if (!f.elements.consent.checked || !f.elements.consent_mkt.checked) return say(C.err_consent, true);
+      if (!f.elements.consent.checked) return say(C.err_consent, true);
       const reg = f.elements.region;
       const data = {
         name: v("name"), phone: v("phone"), email: v("email"), budget: v("budget"), region: v("region"),
         regionName: reg && reg.value ? reg.selectedOptions[0].textContent : "", msg: v("msg"),
         offer: f.dataset.offer || "", page: location.href, lang: C.lang,
-        consent: true, consent_mkt: true, website: v("website"),
+        consent: true, consent_mkt: !!(f.elements.consent_mkt && f.elements.consent_mkt.checked), website: v("website"),
       };
       btn.disabled = true; say(C.sending);
       try {
