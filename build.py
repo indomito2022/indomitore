@@ -602,7 +602,7 @@ def copy_static(dist, featured):
     """Style, favicon, ikona na telefon, logo i (jeśli są w repo) portret i wideo do sekcji otwierającej."""
     out = {}
     for name, dst in (("styl.css", "styl.css"), ("formularz.js", "formularz.js"), ("logo-kon.png", "favicon.png"), ("apple-touch-icon.png", "apple-touch-icon.png"),
-                      ("logo-pelne.png", "logo-pelne.png")):
+                      ("logo-pelne.png", "logo-pelne.png"), ("newsletter.jpg", "newsletter.jpg")):
         s = asset(name)
         if s:
             shutil.copyfile(s, os.path.join(dist, dst)); out[name] = dst
