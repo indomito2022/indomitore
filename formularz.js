@@ -46,9 +46,39 @@
           body: JSON.stringify({ type: "newsletter", name: f.elements.name.value.trim(), email, lang: C.lang,
             page: location.href, consent_mkt: true, website: f.elements.website.value }) });
         if (!r.ok) throw new Error(r.status);
-        f.reset(); say(C.nl_ok);
+        f.reset(); say(C.nl_ok); mark("done");
+        setTimeout(() => { const d = f.closest("dialog"); if (d && d.open) d.close(); }, 3500);
       } catch (err) { say(C.err, true); }
       btn.disabled = false;
     });
   });
+  // okienko newslettera: pokazuje się po chwili lub po przewinięciu; „nie teraz” = przerwa 7 dni, zapis = nigdy więcej
+  const dlg = document.getElementById("nlPop");
+  if (dlg && dlg.showModal) {
+    const open = () => { if (!dlg.open) dlg.showModal(); };
+    const close = why => { if (dlg.open) dlg.close(); if (why) mark(why); };
+    dlg.querySelectorAll("[data-nl-close]").forEach(b => b.addEventListener("click", () => close("later")));
+    dlg.addEventListener("cancel", () => mark("later"));
+    dlg.addEventListener("click", e => { if (e.target === dlg) close("later"); });
+    document.querySelectorAll("[data-nl-open]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); open(); }));
+    const st = get();
+    const wait = st === "done" || (st && Date.now() - +st < 7 * 864e5);
+    let seen = false; try { seen = sessionStorage.getItem("nl_seen") === "1"; } catch (e) {}
+    if (/[?&]nl=1/.test(location.search)) open();
+    else if (!wait && !seen) {
+      let fired = false;
+      const busy = () => document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+      const fire = () => {
+        if (fired) return;
+        if (busy() || document.querySelector("dialog[open]")) return setTimeout(fire, 8000);
+        fired = true; open(); try { sessionStorage.setItem("nl_seen", "1"); } catch (e) {}
+        removeEventListener("scroll", onScroll);
+      };
+      const onScroll = () => { if (scrollY > (document.body.scrollHeight - innerHeight) * 0.45) fire(); };
+      setTimeout(fire, 12000);
+      addEventListener("scroll", onScroll, { passive: true });
+    }
+  }
+  function get() { try { return localStorage.getItem("indomito_nl"); } catch (e) { return null; } }
+  function mark(v) { try { if (get() !== "done") localStorage.setItem("indomito_nl", v === "done" ? "done" : String(Date.now())); } catch (e) {} }
 })();

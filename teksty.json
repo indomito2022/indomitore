@@ -207,12 +207,15 @@
     "ig_h2": "Na bieżąco z Hiszpanii",
     "ig_follow": "Obserwuj na Instagramie",
     "nl_eyebrow": "Newsletter",
-    "nl_h": "Nowe oferty prosto na Twój e-mail",
+    "nl_h": "Bądź na bieżąco z najnowszymi ofertami",
     "nl_p": "Raz na jakiś czas wysyłam najciekawsze nowe inwestycje i okazje z Costa Blanca i Costa Cálida, zanim trafią na portale. Bez spamu.",
     "nl_name": "Imię (opcjonalnie)",
     "nl_email": "Twój e-mail",
     "nl_btn": "Zapisz się",
-    "nl_consent": "Chcę otrzymywać oferty nieruchomości e-mailem. Mogę zrezygnować w każdej chwili."
+    "nl_consent": "Chcę otrzymywać oferty nieruchomości e-mailem. Mogę zrezygnować w każdej chwili.",
+    "nl_close": "Zamknij",
+    "nl_later": "Nie teraz",
+    "nl_link": "Newsletter z ofertami"
   },
   "es": {
     "lang_name": "Español",
@@ -422,12 +425,15 @@
     "ig_h2": "Al día desde España",
     "ig_follow": "Sígueme en Instagram",
     "nl_eyebrow": "Newsletter",
-    "nl_h": "Nuevas propiedades directamente en tu correo",
+    "nl_h": "Entérate primero de las nuevas propiedades",
     "nl_p": "De vez en cuando envío las promociones y oportunidades más interesantes de la Costa Blanca y la Costa Cálida, antes de que lleguen a los portales. Sin spam.",
     "nl_name": "Nombre (opcional)",
     "nl_email": "Tu correo electrónico",
     "nl_btn": "Suscribirme",
-    "nl_consent": "Quiero recibir ofertas inmobiliarias por correo electrónico. Puedo darme de baja en cualquier momento."
+    "nl_consent": "Quiero recibir ofertas inmobiliarias por correo electrónico. Puedo darme de baja en cualquier momento.",
+    "nl_close": "Cerrar",
+    "nl_later": "Ahora no",
+    "nl_link": "Newsletter de propiedades"
   },
   "en": {
     "lang_name": "English",
@@ -637,11 +643,14 @@
     "ig_h2": "Fresh from Spain",
     "ig_follow": "Follow on Instagram",
     "nl_eyebrow": "Newsletter",
-    "nl_h": "New properties straight to your inbox",
+    "nl_h": "Be the first to see new properties",
     "nl_p": "Every now and then I send the most interesting new developments and opportunities on the Costa Blanca and Costa Cálida, before they reach the portals. No spam.",
     "nl_name": "Name (optional)",
     "nl_email": "Your email",
     "nl_btn": "Subscribe",
-    "nl_consent": "I want to receive property offers by email. I can unsubscribe at any time."
+    "nl_consent": "I want to receive property offers by email. I can unsubscribe at any time.",
+    "nl_close": "Close",
+    "nl_later": "Not now",
+    "nl_link": "Property newsletter"
   }
 }
