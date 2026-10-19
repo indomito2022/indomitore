@@ -227,7 +227,7 @@ document.querySelectorAll(".region").forEach(b => b.addEventListener("click", ()
 
 // karta oferty (taka sama jak w build.py dla „podobnych ofert”)
 function card(d, eager=false){
-  const left = d.src === "indomito" ? `<span class="tag own">${d.reserved ? T.tag_res : T.tag_own}</span>`
+  const left = d.src === "indomito" ? `<span class="tag own${d.ex && !d.reserved ? " excl" : ""}">${d.reserved ? T.tag_res : d.ex ? T.tag_excl : T.tag_own}</span>`
              : d.mk === "resale" ? `<span class="tag dark">${T.tag_resale}</span>`
              : (d.beach > 0 && d.beach <= 1000) ? `<span class="tag dark">${T.tag_beach}</span>` : `<span class="tag dark">${T.tag_new}</span>`;
   const right = `<span class="tags-r">${d.sv ? `<span class="tag">${T.tag_sea}</span>` : ""}${d.pool ? `<span class="tag">${T.tag_pool}</span>` : ""}</span>`;

@@ -187,7 +187,8 @@
       "tag_resale": "Rynek wtórny",
       "crit_new": "Nowe inwestycje",
       "crit_resale": "Rynek wtórny",
-      "tag_sea": "Widok na morze"
+      "tag_sea": "Widok na morze",
+      "tag_excl": "Na wyłączność"
     },
     "s_price_from": "Cena od",
     "s_price_to": "Cena do",
@@ -419,7 +420,8 @@
       "tag_resale": "Segunda mano",
       "crit_new": "Obra nueva",
       "crit_resale": "Segunda mano",
-      "tag_sea": "Vistas al mar"
+      "tag_sea": "Vistas al mar",
+      "tag_excl": "En exclusiva"
     },
     "s_price_from": "Precio mín.",
     "s_price_to": "Precio máx.",
@@ -651,7 +653,8 @@
       "tag_resale": "Resale",
       "crit_new": "New build",
       "crit_resale": "Resale",
-      "tag_sea": "Sea views"
+      "tag_sea": "Sea views",
+      "tag_excl": "Exclusive"
     },
     "s_price_from": "Min price",
     "s_price_to": "Max price",

@@ -286,6 +286,7 @@ def fetch_notion(token, db_id, dist):
             "sea": any("morze" in a.lower() or "widok na morze" in a.lower() for a in amen),
             "reserved": (pr.get("Status", {}).get("status") or {}).get("name") == "Zarezerwowana",
             "featured": bool(pr.get("Wyróżniona", {}).get("checkbox")),
+            "excl": bool(pr.get("Na wyłączność", {}).get("checkbox")),
         })
     return out
 
@@ -447,7 +448,7 @@ def card_html(p, lang, base, eager=False):
     """Karta oferty w HTML (tak jak w JS na stronie głównej)."""
     j = T[lang]["js"]
     if p["src"] == "indomito":
-        left = f'<span class="tag own">{E(j["tag_res"] if p.get("reserved") else j["tag_own"])}</span>'
+        left = f'<span class="tag own{" excl" if p.get("excl") and not p.get("reserved") else ""}">{E(j["tag_res"] if p.get("reserved") else j["tag_excl"] if p.get("excl") else j["tag_own"])}</span>'
     elif p.get("market") == "resale":
         left = f'<span class="tag dark">{E(j["tag_resale"])}</span>'
     elif 0 < p["beach"] <= 1000:
@@ -533,6 +534,7 @@ def offer_page(p, lang, props, stats, ver, tpl):
         "o_meta": E(meta), "o_img": E(imgs[0] if re.match(r"https?://", imgs[0]) else SITE + imgs[0]),
         "o_nphotos": E(f'{n} {j["photos"]}'), "o_wa": E(wa_link(msg)),
         "o_mail_subj": urllib.parse.quote(f'{t["o_ref"]} {p["ref"]}'),
+        "o_badge": f'<span class="tag own excl op-badge">{E(j["tag_excl"])}</span>' if p.get("excl") else "",
         "mosaic": mosaic, "mosaic_cls": "" if n >= 5 else " few", "lb_imgs": lb, "specs": specs_html,
         "desc_block": desc_block, "feats_block": feats_block, "map_block": map_block, "similar_block": similar_block,
     })
@@ -567,6 +569,7 @@ def summary(p, lang):
     if p.get("golf"): s["gf"] = 1
     if p.get("sea"): s["sv"] = 1
     if p.get("reserved"): s["reserved"] = True
+    if p.get("excl"): s["ex"] = 1
     if p.get("feat"): s["feat"] = p["feat"]
     return s
 
