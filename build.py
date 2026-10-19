@@ -25,6 +25,7 @@ Uruchomienie:
 Tylko biblioteka standardowa Pythona.
 """
 import argparse, html, json, os, re, shutil, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import seo  # podstrony SEO po polsku (seo.py)
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -427,6 +428,8 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
         "canonical": SITE + paths[lang], "wa_link": E(wa_link(extra_wa)),
         "footer_offers": T[lang]["footer_offers"].replace("{d}", stats["updated"]),
         "privacy_url": base + PRIVACY[lang],
+        "seo_footer": seo.footer_links(base) if lang == "pl" else "",
+        "nav_extra": f'<a href="{base}{seo.GUIDE}">Poradnik</a>' if lang == "pl" else "",
     })
     j = T[lang]["js"]
     ctx["form_cfg"] = json.dumps({"lang": lang, "endpoint": FORM_ENDPOINT, "sending": j["f_sending"], "ok": j["f_ok"],
@@ -459,7 +462,7 @@ def card_html(p, lang, base, eager=False):
         f'<span><b class="num">{p["m2"]}</b> m²</span>' if p["m2"] else ""))
     loc = f'{p["town"]} · {by_lang(p["type"], lang)}' + (f' · {fmt_beach(p["beach"], lang)}' if p["beach"] else "")
     return (f'<a class="card" href="{E(base + offer_path(lang, p["ref"]))}">'
-            f'<div class="ph"><img src="{E(src(p["imgs"][0], base))}" alt="" loading="{"eager" if eager else "lazy"}" decoding="async" referrerpolicy="no-referrer">'
+            f'<div class="ph"><img src="{E(src(p["imgs"][0], base))}" alt="{E(by_lang(p["title"], lang) or p["town"])}" loading="{"eager" if eager else "lazy"}" decoding="async" referrerpolicy="no-referrer">'
             f'<div class="tags">{left}{right}</div><span class="n">{len(p["imgs"])} {E(j["photos"])}</span></div>'
             f'<div class="cb"><div class="loc">{E(loc)}</div><div class="ttl">{E(by_lang(p["title"], lang))}</div>'
             f'<div class="c-foot"><span class="price num">{E(fmt_price(p["price"], lang))}</span>'
@@ -506,7 +509,7 @@ def offer_page(p, lang, props, stats, ver, tpl):
     n = len(imgs)
     show = imgs[:5] if n >= 5 else imgs[:1]
     mosaic = "".join(f'<button type="button" data-open="{i}" aria-label="{E(t["o_photo"].format(i=i+1, n=n))}">'
-                     f'<img src="{E(src(u, base))}" alt="" loading="{"eager" if i == 0 else "lazy"}" referrerpolicy="no-referrer"></button>'
+                     f'<img src="{E(src(u, base))}" alt="{E(title)} – {E(t["o_photo"].format(i=i+1, n=n))}" loading="{"eager" if i == 0 else "lazy"}" referrerpolicy="no-referrer"></button>'
                      for i, u in enumerate(show))
     mosaic += f'<button type="button" class="all" data-open="0">{E(t["o_photos"])} ({n})</button>'
     lb = "".join(f'<figure><img data-src="{E(src(u, base))}" alt="{E(t["o_photo"].format(i=i+1, n=n))}" referrerpolicy="no-referrer"></figure>'
@@ -534,6 +537,23 @@ def offer_page(p, lang, props, stats, ver, tpl):
         "desc_block": desc_block, "feats_block": feats_block, "map_block": map_block, "similar_block": similar_block,
     })
     out = render(tpl, ctx)
+    ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Indómito", "item": SITE + HOME[lang]},
+              {"@type": "ListItem", "position": 2, "name": region, "item": SITE + HOME[lang] + "#oferty"},
+              {"@type": "ListItem", "position": 3, "name": title, "item": SITE + page}]},
+          {"@context": "https://schema.org", "@type": "RealEstateListing", "name": title, "url": SITE + page,
+           "description": meta, "inLanguage": lang,
+           "image": [u if re.match(r"https?://", u) else SITE + u for u in imgs[:6]],
+           "offers": {"@type": "Offer", "price": p["price"], "priceCurrency": "EUR", "availability": "https://schema.org/InStock"},
+           "about": {"@type": "Accommodation", "numberOfBedrooms": p["beds"] or None, "numberOfBathroomsTotal": p["baths"] or None,
+                     "floorSize": {"@type": "QuantitativeValue", "value": p["m2"], "unitCode": "MTK"} if p["m2"] else None,
+                     "address": {"@type": "PostalAddress", "addressLocality": p.get("area") or p["town"], "addressRegion": region, "addressCountry": "ES"}}}]
+    def prune(o):
+        if isinstance(o, dict): return {k: prune(v) for k, v in o.items() if v is not None}
+        if isinstance(o, list): return [prune(v) for v in o]
+        return o
+    tag = "".join('<script type="application/ld+json">' + json.dumps(prune(x), ensure_ascii=False).replace("</", "<\\/") + "</script>" for x in ld)
+    out = out.replace("</head>", tag + "</head>", 1)
     return page, out
 
 
@@ -601,6 +621,13 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
         d["img"] = src(d["img"], base)
     out = render(tpl, ctx)
     out = (out.replace("/*__DATA__*/[]", js(data)).replace("/*__HERO__*/{}", js(h)).replace("/*__T__*/{}", js(t["js"])))
+    agent = {"@context": "https://schema.org", "@type": "RealEstateAgent", "name": "Indómito Real Estate", "url": SITE + page,
+             "logo": SITE + "logo-pelne.png", "image": SITE + "portret.jpg", "telephone": "+34 613 15 27 55", "email": "info@indomitore.com",
+             "founder": {"@type": "Person", "name": "Klaudia Szafran"}, "priceRange": "€€",
+             "address": {"@type": "PostalAddress", "streetAddress": "Calle Marqués de Sotelo 5, bajo 5", "postalCode": "46002", "addressLocality": "Valencia", "addressCountry": "ES"},
+             "areaServed": ["Costa Blanca", "Costa Cálida"], "knowsLanguage": ["pl", "es", "en"], "sameAs": ["https://www.instagram.com/indomitore/"]}
+    site = {"@context": "https://schema.org", "@type": "WebSite", "name": "Indómito Real Estate", "url": SITE, "inLanguage": lang}
+    out = out.replace("</head>", "".join('<script type="application/ld+json">' + js(x) + "</script>" for x in (agent, site)) + "</head>", 1)
     return page, out
 
 
@@ -647,6 +674,13 @@ def copy_static(dist, featured):
         s = asset(name)
         if s:
             shutil.copyfile(s, os.path.join(dist, name)); out[key] = name
+    # poradnik PDF (lead magnet): plik w głównym folderze repo -> dist/poradnik/
+    pdf = os.path.basename(seo.GUIDE_PDF)
+    if asset(pdf):
+        os.makedirs(os.path.join(dist, "poradnik"), exist_ok=True)
+        shutil.copyfile(asset(pdf), os.path.join(dist, seo.GUIDE_PDF)); out["pdf"] = seo.GUIDE_PDF
+    else:
+        print(f"! brak pliku {pdf} – link do poradnika PDF nie zadziała", file=sys.stderr)
     # Instagram (Behold.so): instagram.txt → 1. linia ID feedu, 2. linia (opcjonalnie) link do profilu
     s = asset("instagram.txt")
     if s:
@@ -699,13 +733,14 @@ def build(props, dist):
     for lang in LANGS:
         page, out = privacy_page(lang, stats, ver)
         write(dist, page, out); urls.append(page)
+    urls += seo.build_pages(sys.modules[__name__], props, stats, ver, dist)
     write(dist, "404.html", not_found_page(stats, ver))
     with open(os.path.join(dist, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         f.writelines(f"<url><loc>{SITE}{u}</loc></url>\n" for u in urls)
         f.write("</urlset>\n")
     with open(os.path.join(dist, "robots.txt"), "w") as f:
-        f.write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
+        f.write(f"User-agent: *\nAllow: /\nDisallow: /poradnik/\nSitemap: {SITE}sitemap.xml\n")
     with open(os.path.join(dist, "CNAME"), "w") as f:
         f.write(DOMAIN + "\n")
     size = sum(os.path.getsize(os.path.join(r, n)) for r, _, fs in os.walk(dist) for n in fs)

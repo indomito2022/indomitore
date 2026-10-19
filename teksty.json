@@ -2,17 +2,17 @@
   "pl": {
     "lang_name": "Polski",
     "locale": "pl-PL",
-    "meta_title": "Indómito — ponad {n} ofert od deweloperów w Hiszpanii",
-    "meta_desc": "Ponad {n} ofert od deweloperów w jednym miejscu: nowe apartamenty, domy i wille na Costa Blanca i Costa Cálida. Klaudia Szafran, Indómito Real Estate, RAICV 4368.",
+    "meta_title": "Nieruchomości w Hiszpanii – polskie biuro nieruchomości na Costa Blanca | Indómito",
+    "meta_desc": "Polskie biuro nieruchomości w Hiszpanii. Ponad {n} mieszkań, apartamentów i domów na Costa Blanca i Costa Cálida – nowe i z rynku wtórnego. Pomoc w zakupie po polsku, krok po kroku.",
     "nav_offers": "Oferty",
     "nav_regions": "Regiony",
     "nav_about": "O mnie",
     "nav_how": "Jak kupujemy",
     "nav_contact": "Kontakt",
-    "hero_eyebrow": "Nowe budowy · Costa Blanca · Costa Cálida",
-    "h1_a": "Ponad",
+    "hero_eyebrow": "Polskie biuro nieruchomości w Hiszpanii · Costa Blanca · Costa Cálida",
+    "h1_a": "Nieruchomości w Hiszpanii: ponad",
     "h1_b": "ofert",
-    "h1_em": "od deweloperów",
+    "h1_em": "na Costa Blanca i Costa Cálida",
     "hero_lead": "Wszystkie nieruchomości deweloperskie w jednym miejscu. Odkryj nowe apartamenty, domy i wille na Costa Blanca, Costa Cálida i w innych atrakcyjnych lokalizacjach Hiszpanii.",
     "s_aria": "Wyszukiwarka nieruchomości",
     "s_town": "Miejscowość",
@@ -227,7 +227,9 @@
     "mk_new": "Nowe inwestycje",
     "mk_resale": "Rynek wtórny",
     "mk_rent": "Wynajem",
-    "sp_market": "Rynek"
+    "sp_market": "Rynek",
+    "t_hv": "Domy i wille",
+    "reg_cb": "Costa Blanca – całe wybrzeże"
   },
   "es": {
     "lang_name": "Español",
@@ -457,7 +459,9 @@
     "mk_new": "Obra nueva",
     "mk_resale": "Segunda mano",
     "mk_rent": "Alquiler",
-    "sp_market": "Mercado"
+    "sp_market": "Mercado",
+    "t_hv": "Casas y villas",
+    "reg_cb": "Costa Blanca – toda"
   },
   "en": {
     "lang_name": "English",
@@ -687,6 +691,8 @@
     "mk_new": "New build",
     "mk_resale": "Resale",
     "mk_rent": "Rental",
-    "sp_market": "Market"
+    "sp_market": "Market",
+    "t_hv": "Houses and villas",
+    "reg_cb": "Costa Blanca – all"
   }
 }

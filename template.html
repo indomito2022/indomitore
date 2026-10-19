@@ -35,9 +35,9 @@
         <div class="f town"><label for="fTown">{{s_town}}</label>
           <input id="fTown" type="search" list="towns" placeholder="{{s_town_ph}}" autocomplete="off" enterkeyhint="search"><datalist id="towns"></datalist></div>
         <div class="f"><label for="fGrp">{{s_region}}</label>
-          <select id="fGrp"><option value="">{{s_all}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></div>
+          <select id="fGrp"><option value="">{{s_all}}</option><option value="cb">{{reg_cb}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></div>
         <div class="f"><label for="fType">{{s_type}}</label><select id="fType"><option value="">{{s_all}}</option>
-          <optgroup label="{{t_groups}}"><option value="g:apt">{{t_apt}}</option><option value="g:house">{{t_house}}</option><option value="g:villa">{{t_villa}}</option></optgroup>
+          <optgroup label="{{t_groups}}"><option value="g:apt">{{t_apt}}</option><option value="g:house">{{t_house}}</option><option value="g:villa">{{t_villa}}</option><option value="g:hv">{{t_hv}}</option></optgroup>
           <optgroup label="{{t_exact}}" id="fTypeExact"></optgroup></select></div>
         <div class="f"><label for="fBeds">{{s_beds}}</label>
           <select id="fBeds"><option value="0">{{s_any}}</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></div>
@@ -237,7 +237,7 @@ function card(d, eager=false){
     d.m2 ? `<span><b class="num">${d.m2}</b> m²</span>` : ""
   ].join("");
   return `<a class="card" href="${offerUrl(d.ref)}">
-    <div class="ph"><img src="${esc(d.img)}" alt="" loading="${eager ? "eager" : "lazy"}" decoding="async" referrerpolicy="no-referrer"><div class="tags">${left}${right}</div><span class="n">${d.n} ${T.photos}</span></div>
+    <div class="ph"><img src="${esc(d.img)}" alt="${esc(d.title || d.town)}" loading="${eager ? "eager" : "lazy"}" decoding="async" referrerpolicy="no-referrer"><div class="tags">${left}${right}</div><span class="n">${d.n} ${T.photos}</span></div>
     <div class="cb">
       <div class="loc">${esc(d.town)} · ${esc(d.type)}${d.beach ? " · " + esc(fmtBeach(d.beach)) : ""}</div>
       <div class="ttl">${esc(d.title)}</div>
@@ -303,7 +303,8 @@ function apply(reset=true){
   list = DATA.filter(d =>
     (!f.mk || (d.mk || "new") === f.mk) &&
     (!q || fold(d.town).includes(q) || fold(d.title).includes(q) || fold(d.region).includes(q)) &&
-    (!f.grp || d.grp === f.grp) && (!f.type || (f.type.startsWith("g:") ? d.k === f.type.slice(2) : d.type === f.type)) && d.beds >= f.beds &&
+    (!f.grp || d.grp === f.grp || (f.grp === "cb" && (d.grp === "cbn" || d.grp === "cbs"))) &&
+    (!f.type || (f.type === "g:hv" ? (d.k === "house" || d.k === "villa") : f.type.startsWith("g:") ? d.k === f.type.slice(2) : d.type === f.type)) && d.beds >= f.beds &&
     (!f.min || d.price >= f.min) && (!f.price || (d.price && d.price <= f.price)) &&
     (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)) && (!f.tour || d.tl) && (!f.golf || d.gf) && (!f.sea || d.sv));
   if (f.sort === "asc") list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
@@ -334,7 +335,11 @@ $("#moreBtn").addEventListener("click", () => { shown += PAGE; render(); });
 
 // przywróć ostatnie kryteria
 try {
-  const s = JSON.parse(localStorage.getItem(STORE) || "null");
+  // filtry z adresu (linki z podstron SEO), np. ?grp=cb&type=g:apt
+  const qp = new URLSearchParams(location.search), keys = ["mk","town","grp","type","beds","min","price","sort","pool","beach","tour","golf","sea"];
+  const fromUrl = keys.some(k => qp.has(k));
+  const s = fromUrl ? Object.fromEntries(keys.filter(k => qp.has(k)).map(k => [k, qp.get(k)])) : JSON.parse(localStorage.getItem(STORE) || "null");
+  if (fromUrl) setTimeout(() => $("#oferty").scrollIntoView(), 50);
   if (s) { const r = document.querySelector(`input[name="mk"][value="${s.mk||""}"]`); if (r) r.checked = true;
            $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0;
            $("#fPriceMin").value=s.min||0; $("#fPrice").value=s.price||0;
