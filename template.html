@@ -44,6 +44,7 @@
       </div>
       <div class="s-foot">
         <label class="chk" for="fPool"><input type="checkbox" id="fPool"> {{s_pool}}</label>
+        <label class="chk" for="fSea"><input type="checkbox" id="fSea"> {{s_sea}}</label>
         <label class="chk" for="fBeach"><input type="checkbox" id="fBeach"> {{s_beach}}</label>
         <label class="chk" for="fTour"><input type="checkbox" id="fTour"> {{s_tour}}</label>
         <label class="chk" for="fGolf"><input type="checkbox" id="fGolf"> {{s_golf}}</label>
@@ -272,7 +273,7 @@ function filters(){
   let min = +$("#fPriceMin").value, max = +$("#fPrice").value;
   if (min && max && min > max) { [min, max] = [max, min]; $("#fPriceMin").value = min; $("#fPrice").value = max; }
   return { town:$("#fTown").value.trim(), grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, min, price:max,
-           sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked, tour:$("#fTour").checked, golf:$("#fGolf").checked };
+           sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked, tour:$("#fTour").checked, golf:$("#fGolf").checked, sea:$("#fSea").checked };
 }
 function describe(f){
   const p = [];
@@ -286,6 +287,7 @@ function describe(f){
   if (f.beach) p.push(T.crit_beach);
   if (f.tour) p.push(T.crit_tour);
   if (f.golf) p.push(T.crit_golf);
+  if (f.sea) p.push(T.crit_sea);
   return p.length ? p.join(" · ") : T.crit_all;
 }
 function apply(reset=true){
@@ -294,7 +296,7 @@ function apply(reset=true){
     (!q || fold(d.town).includes(q) || fold(d.title).includes(q) || fold(d.region).includes(q)) &&
     (!f.grp || d.grp === f.grp) && (!f.type || (f.type.startsWith("g:") ? d.k === f.type.slice(2) : d.type === f.type)) && d.beds >= f.beds &&
     (!f.min || d.price >= f.min) && (!f.price || (d.price && d.price <= f.price)) &&
-    (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)) && (!f.tour || d.tl) && (!f.golf || d.gf));
+    (!f.pool || d.pool) && (!f.beach || (d.beach > 0 && d.beach <= 1000)) && (!f.tour || d.tl) && (!f.golf || d.gf) && (!f.sea || d.sv));
   if (f.sort === "asc") list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
   else if (f.sort === "desc") list.sort((a,b)=>b.price-a.price);
   else if (f.sort === "beach") list.sort((a,b)=>(a.beach||1e9)-(b.beach||1e9));
@@ -325,7 +327,7 @@ try {
   const s = JSON.parse(localStorage.getItem(STORE) || "null");
   if (s) { $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0;
            $("#fPriceMin").value=s.min||0; $("#fPrice").value=s.price||0;
-           $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; $("#fTour").checked=!!s.tour; $("#fGolf").checked=!!s.golf;
+           $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; $("#fTour").checked=!!s.tour; $("#fGolf").checked=!!s.golf; $("#fSea").checked=!!s.sea;
            if ($("#fType").value !== (s.type||"")) $("#fType").value = ""; }
 } catch(e) {}
 apply();

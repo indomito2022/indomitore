@@ -169,6 +169,7 @@ def norm(rec, source="redsp"):
         "kind": KIND.get(rec.get("t", ""), "apt"),
         "tour": any(f["en"] == "Tourist licence" for f in feats),
         "golf": any(f["en"] == "Near golf" for f in feats),
+        "sea": any(f["en"] == "Sea views" for f in feats),
         "title": {l: html.unescape(v).strip() for l, v in as_langs(rec.get("ti")).items()},
         "desc": {l: clean_desc(v) for l, v in as_langs(rec.get("d")).items()},
         "feats": feats, "imgs": rec.get("i", []),
@@ -197,7 +198,7 @@ def parse_feed(path):
             out.append(norm(rec))
         el.clear()
     print("Opisy w feedzie: " + ", ".join(f"{l.upper()} {n}" for l, n in have.items()))
-    print(f"Licencja turystyczna: {sum(p['tour'] for p in out)}, golf w pobliżu: {sum(p['golf'] for p in out)}, "
+    print(f"Licencja turystyczna: {sum(p['tour'] for p in out)}, golf w pobliżu: {sum(p['golf'] for p in out)}, widok na morze: {sum(p['sea'] for p in out)}, "
           f"apartamenty/domy/wille: {sum(p['kind']=='apt' for p in out)}/{sum(p['kind']=='house' for p in out)}/{sum(p['kind']=='villa' for p in out)}")
     return out
 
@@ -257,6 +258,7 @@ def fetch_notion(token, db_id, dist):
             "title": {"pl": txt("Nazwa")}, "desc": {"pl": clean_desc(txt("Opis"))},
             "feats": [{l: a for l in LANGS} for a in amen], "imgs": imgs, "kind": kind_pl(sel("Typ")),
             "tour": any("turyst" in a.lower() for a in amen), "golf": any("golf" in a.lower() for a in amen),
+            "sea": any("morze" in a.lower() or "widok na morze" in a.lower() for a in amen),
             "reserved": (pr.get("Status", {}).get("status") or {}).get("name") == "Zarezerwowana",
             "featured": bool(pr.get("Wyróżniona", {}).get("checkbox")),
         })
@@ -514,6 +516,7 @@ def summary(p, lang):
     s["k"] = p.get("kind", "apt")
     if p.get("tour"): s["tl"] = 1
     if p.get("golf"): s["gf"] = 1
+    if p.get("sea"): s["sv"] = 1
     if p.get("reserved"): s["reserved"] = True
     if p.get("feat"): s["feat"] = p["feat"]
     return s

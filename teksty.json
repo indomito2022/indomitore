@@ -182,7 +182,8 @@
       "f_err_email": "Sprawdź proszę adres e-mail.",
       "f_err_phone": "Sprawdź proszę numer telefonu (z kierunkowym kraju).",
       "nl_ok": "Dziękuję! Jesteś na liście. Nowe oferty wyślę na Twój e-mail.",
-      "nl_err_consent": "Zaznacz zgodę, żebym mogła wysyłać Ci oferty."
+      "nl_err_consent": "Zaznacz zgodę, żebym mogła wysyłać Ci oferty.",
+      "crit_sea": "widok na morze"
     },
     "s_price_from": "Cena od",
     "s_price_to": "Cena do",
@@ -215,7 +216,8 @@
     "nl_consent": "Chcę otrzymywać oferty nieruchomości e-mailem. Mogę zrezygnować w każdej chwili.",
     "nl_close": "Zamknij",
     "nl_later": "Nie teraz",
-    "nl_link": "Newsletter z ofertami"
+    "nl_link": "Newsletter z ofertami",
+    "s_sea": "Widok na morze"
   },
   "es": {
     "lang_name": "Español",
@@ -400,7 +402,8 @@
       "f_err_email": "Revisa el correo electrónico, por favor.",
       "f_err_phone": "Revisa el número de teléfono (con prefijo del país).",
       "nl_ok": "¡Gracias! Ya estás en la lista. Te enviaré las nuevas ofertas por correo.",
-      "nl_err_consent": "Marca la casilla para que pueda enviarte ofertas."
+      "nl_err_consent": "Marca la casilla para que pueda enviarte ofertas.",
+      "crit_sea": "vistas al mar"
     },
     "s_price_from": "Precio mín.",
     "s_price_to": "Precio máx.",
@@ -433,7 +436,8 @@
     "nl_consent": "Quiero recibir ofertas inmobiliarias por correo electrónico. Puedo darme de baja en cualquier momento.",
     "nl_close": "Cerrar",
     "nl_later": "Ahora no",
-    "nl_link": "Newsletter de propiedades"
+    "nl_link": "Newsletter de propiedades",
+    "s_sea": "Vistas al mar"
   },
   "en": {
     "lang_name": "English",
@@ -618,7 +622,8 @@
       "f_err_email": "Please check your email address.",
       "f_err_phone": "Please check your phone number (with country code).",
       "nl_ok": "Thank you! You're on the list. I'll email you new offers.",
-      "nl_err_consent": "Please tick the box so I can send you offers."
+      "nl_err_consent": "Please tick the box so I can send you offers.",
+      "crit_sea": "sea views"
     },
     "s_price_from": "Min price",
     "s_price_to": "Max price",
@@ -651,6 +656,7 @@
     "nl_consent": "I want to receive property offers by email. I can unsubscribe at any time.",
     "nl_close": "Close",
     "nl_later": "Not now",
-    "nl_link": "Property newsletter"
+    "nl_link": "Property newsletter",
+    "s_sea": "Sea views"
   }
 }
