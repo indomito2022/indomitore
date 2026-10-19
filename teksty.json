@@ -183,7 +183,10 @@
       "f_err_phone": "Sprawdź proszę numer telefonu (z kierunkowym kraju).",
       "nl_ok": "Dziękuję! Jesteś na liście. Nowe oferty wyślę na Twój e-mail.",
       "nl_err_consent": "Zaznacz zgodę, żebym mogła wysyłać Ci oferty.",
-      "crit_sea": "widok na morze"
+      "crit_sea": "widok na morze",
+      "tag_resale": "Rynek wtórny",
+      "crit_new": "Nowe inwestycje",
+      "crit_resale": "Rynek wtórny"
     },
     "s_price_from": "Cena od",
     "s_price_to": "Cena do",
@@ -217,7 +220,13 @@
     "nl_close": "Zamknij",
     "nl_later": "Nie teraz",
     "nl_link": "Newsletter z ofertami",
-    "s_sea": "Widok na morze"
+    "s_sea": "Widok na morze",
+    "s_market": "Rynek",
+    "mk_all": "Wszystkie",
+    "mk_new": "Nowe inwestycje",
+    "mk_resale": "Rynek wtórny",
+    "mk_rent": "Wynajem",
+    "sp_market": "Rynek"
   },
   "es": {
     "lang_name": "Español",
@@ -403,7 +412,10 @@
       "f_err_phone": "Revisa el número de teléfono (con prefijo del país).",
       "nl_ok": "¡Gracias! Ya estás en la lista. Te enviaré las nuevas ofertas por correo.",
       "nl_err_consent": "Marca la casilla para que pueda enviarte ofertas.",
-      "crit_sea": "vistas al mar"
+      "crit_sea": "vistas al mar",
+      "tag_resale": "Segunda mano",
+      "crit_new": "Obra nueva",
+      "crit_resale": "Segunda mano"
     },
     "s_price_from": "Precio mín.",
     "s_price_to": "Precio máx.",
@@ -437,7 +449,13 @@
     "nl_close": "Cerrar",
     "nl_later": "Ahora no",
     "nl_link": "Newsletter de propiedades",
-    "s_sea": "Vistas al mar"
+    "s_sea": "Vistas al mar",
+    "s_market": "Mercado",
+    "mk_all": "Todas",
+    "mk_new": "Obra nueva",
+    "mk_resale": "Segunda mano",
+    "mk_rent": "Alquiler",
+    "sp_market": "Mercado"
   },
   "en": {
     "lang_name": "English",
@@ -623,7 +641,10 @@
       "f_err_phone": "Please check your phone number (with country code).",
       "nl_ok": "Thank you! You're on the list. I'll email you new offers.",
       "nl_err_consent": "Please tick the box so I can send you offers.",
-      "crit_sea": "sea views"
+      "crit_sea": "sea views",
+      "tag_resale": "Resale",
+      "crit_new": "New build",
+      "crit_resale": "Resale"
     },
     "s_price_from": "Min price",
     "s_price_to": "Max price",
@@ -657,6 +678,12 @@
     "nl_close": "Close",
     "nl_later": "Not now",
     "nl_link": "Property newsletter",
-    "s_sea": "Sea views"
+    "s_sea": "Sea views",
+    "s_market": "Market",
+    "mk_all": "All",
+    "mk_new": "New build",
+    "mk_resale": "Resale",
+    "mk_rent": "Rental",
+    "sp_market": "Market"
   }
 }

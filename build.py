@@ -63,6 +63,24 @@ def kind_pl(t):
     return "apt"
 
 
+NOTION_TYPES = {  # typ z Notion (pl) -> (pl, es, en)
+    "Apartament": ("Apartament", "Apartamento", "Apartment"), "Penthouse": ("Penthouse", "Ático", "Penthouse"),
+    "Bungalow": ("Bungalow", "Bungalow", "Bungalow"), "Szeregowiec": ("Dom szeregowy", "Adosado", "Townhouse"),
+    "Willa": ("Willa", "Villa", "Villa"), "Działka": ("Działka", "Parcela", "Plot"), "Lokal": ("Lokal", "Local", "Commercial unit"),
+}
+NOTION_AMEN = {  # udogodnienie z Notion (pl) -> (pl, es, en)
+    "Basen prywatny": ("Basen prywatny", "Piscina privada", "Private pool"),
+    "Basen wspólny": ("Basen wspólny", "Piscina comunitaria", "Communal pool"),
+    "Widok na morze": ("Widok na morze", "Vistas al mar", "Sea views"),
+    "Blisko plaży": ("Blisko plaży", "Cerca de la playa", "Close to the beach"),
+    "Taras / solarium": ("Taras / solarium", "Terraza / solárium", "Terrace / solarium"),
+    "Ogród": ("Ogród", "Jardín", "Garden"), "Garaż / parking": ("Garaż / parking", "Garaje / parking", "Garage / parking"),
+    "Klimatyzacja": ("Klimatyzacja", "Aire acondicionado", "Air conditioning"),
+    "Pole golfowe": ("Blisko pola golfowego", "Cerca del golf", "Near golf"),
+}
+MARKET = {"Nowe": "new", "Wtórne": "resale", "Najem": "rent"}  # pole „Rynek” w Notion
+
+
 TYPES = {  # typ z feedu -> (pl, es, en)
     "Villa": ("Willa", "Villa", "Villa"), "Apartment": ("Apartament", "Apartamento", "Apartment"),
     "Penthouse": ("Penthouse", "Ático", "Penthouse"), "Bungalow": ("Bungalow", "Bungalow", "Bungalow"),
@@ -160,7 +178,7 @@ def norm(rec, source="redsp"):
     pool = bool(rec.get("po")) or any("pool" in f["en"].lower() for f in feats)
     tr = TYPES.get(rec.get("t", ""))
     return {
-        "ref": rec["r"], "src": source, "price": int(float(rec.get("p") or 0)),
+        "ref": rec["r"], "src": source, "market": "new", "price": int(float(rec.get("p") or 0)),
         "type": dict(zip(LANGS, tr)) if tr else {l: rec.get("t", "") for l in LANGS},
         "town": rec.get("tw", ""), "area": rec.get("l", ""), "grp": grp, "inland": inland, "costa": rec.get("c", ""),
         "beds": int(rec.get("b") or 0), "baths": int(rec.get("ba") or 0),
@@ -236,7 +254,7 @@ def fetch_notion(token, db_id, dist):
         sel = lambda k: (pr.get(k, {}).get("select") or {}).get("name", "")
         ref = f"IND-{pr.get('Ref', {}).get('unique_id', {}).get('number', pg['id'][:6])}"
         imgs = []
-        for i, f in enumerate((pr.get("Zdjęcia", {}).get("files") or [])[:20]):
+        for i, f in enumerate((pr.get("Zdjęcia", {}).get("files") or [])[:30]):
             src = (f.get("file") or f.get("external") or {}).get("url")
             if not src: continue
             if f.get("external"):
@@ -247,16 +265,20 @@ def fetch_notion(token, db_id, dist):
                 urllib.request.urlretrieve(src, os.path.join(dist, name)); imgs.append(name)
             except Exception as e:
                 print("  ! zdjęcie", ref, e, file=sys.stderr)
+        if not imgs:  # zdjęcia jako linki (jeden w linii), np. z MLS Costa
+            imgs = [u.strip() for u in re.split(r"[\s,]+", txt("Zdjęcia – linki")) if re.match(r"https?://", u.strip())][:30]
         grp = {"Costa Blanca Norte": "cbn", "Costa Blanca Sur": "cbs", "Costa Cálida": "cc"}.get(sel("Region"), "inne")
         amen = [o["name"] for o in (pr.get("Udogodnienia", {}).get("multi_select") or [])]
         if not imgs: continue
         out.append({
-            "ref": ref, "src": "indomito", "price": int(num("Cena")), "type": {l: sel("Typ") for l in LANGS},
+            "ref": ref, "src": "indomito", "market": MARKET.get(sel("Rynek"), "resale"), "price": int(num("Cena")),
+            "type": dict(zip(LANGS, NOTION_TYPES.get(sel("Typ"), (sel("Typ"),) * 3))),
             "town": sel("Miejscowość"), "area": "", "grp": grp, "inland": False, "costa": sel("Region"),
             "beds": int(num("Sypialnie")), "baths": int(num("Łazienki")), "m2": int(num("Metraż m²")), "plot": 0,
             "beach": 0, "pool": any("Basen" in a for a in amen), "lat": None, "lng": None,
-            "title": {"pl": txt("Nazwa")}, "desc": {"pl": clean_desc(txt("Opis"))},
-            "feats": [{l: a for l in LANGS} for a in amen], "imgs": imgs, "kind": kind_pl(sel("Typ")),
+            "title": {"pl": txt("Nazwa"), "es": txt("Nazwa ES"), "en": txt("Nazwa EN")},
+            "desc": {"pl": clean_desc(txt("Opis")), "es": clean_desc(txt("Opis ES")), "en": clean_desc(txt("Opis EN"))},
+            "feats": [dict(zip(LANGS, NOTION_AMEN.get(a, (a,) * 3))) for a in amen], "imgs": imgs, "kind": kind_pl(sel("Typ")),
             "tour": any("turyst" in a.lower() for a in amen), "golf": any("golf" in a.lower() for a in amen),
             "sea": any("morze" in a.lower() or "widok na morze" in a.lower() for a in amen),
             "reserved": (pr.get("Status", {}).get("status") or {}).get("name") == "Zarezerwowana",
@@ -421,6 +443,8 @@ def card_html(p, lang, base, eager=False):
     j = T[lang]["js"]
     if p["src"] == "indomito":
         left = f'<span class="tag own">{E(j["tag_res"] if p.get("reserved") else j["tag_own"])}</span>'
+    elif p.get("market") == "resale":
+        left = f'<span class="tag dark">{E(j["tag_resale"])}</span>'
     elif 0 < p["beach"] <= 1000:
         left = f'<span class="tag dark">{E(j["tag_beach"])}</span>'
     else:
@@ -470,7 +494,8 @@ def offer_page(p, lang, props, stats, ver, tpl):
     specs = [(t["sp_beds"], p["beds"] or "", 1), (t["sp_baths"], p["baths"] or "", 1),
              (t["sp_area"], f'{p["m2"]} m²' if p["m2"] else "", 1),
              (t["sp_plot"], f'{p["plot"]} m²', 1) if p["plot"] else (t["sp_beach"], beach_short, 1),
-             (t["sp_type"], by_lang(p["type"], lang), 0), (t["sp_town"], town_full, 0),
+             (t["sp_type"], by_lang(p["type"], lang), 0), (t["sp_market"], t["mk_" + p.get("market", "new")], 0),
+             (t["sp_town"], town_full, 0),
              (t["sp_region"], region, 0), (t["sp_beach"], beach_short, 0) if p["plot"] else ("", "", 0)]
     specs_html = "".join(f'<li class="{"k" if big else ""}"><span>{E(k)}</span><b class="{"num" if big else ""}">{E(v)}</b></li>'
                          for k, v, big in specs if v not in ("", None))
@@ -514,6 +539,7 @@ def summary(p, lang):
     s.update({"type": by_lang(p["type"], lang), "region": region_label(p, lang), "title": by_lang(p["title"], lang),
               "img": p["imgs"][0], "n": len(p["imgs"])})
     s["k"] = p.get("kind", "apt")
+    s["mk"] = p.get("market", "new")
     if p.get("tour"): s["tl"] = 1
     if p.get("golf"): s["gf"] = 1
     if p.get("sea"): s["sv"] = 1
@@ -709,7 +735,7 @@ def main():
     if tok and db:
         try:
             own = fetch_notion(tok, db, tmp)
-            print(f"Notion: {len(own)} ofert bezpośrednich")
+            print(f"Notion: {len(own)} ofert bezpośrednich (" + ", ".join(f"{p['ref']} {p['market']}" for p in own) + ")")
         except Exception as e:
             print("! Notion niedostępny, buduję bez ofert bezpośrednich:", e, file=sys.stderr)
     build(own + props, a.out)

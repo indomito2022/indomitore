@@ -26,6 +26,11 @@
     </div>
 
     <form class="search" id="search" role="search" aria-label="{{s_aria}}">
+      <div class="mkt" role="radiogroup" aria-label="{{s_market}}">
+        <label><input type="radio" name="mk" value="" checked><span>{{mk_all}}</span></label>
+        <label><input type="radio" name="mk" value="new"><span>{{mk_new}}</span></label>
+        <label><input type="radio" name="mk" value="resale"><span>{{mk_resale}}</span></label>
+      </div>
       <div class="s-row">
         <div class="f town"><label for="fTown">{{s_town}}</label>
           <input id="fTown" type="search" list="towns" placeholder="{{s_town_ph}}" autocomplete="off" enterkeyhint="search"><datalist id="towns"></datalist></div>
@@ -223,6 +228,7 @@ document.querySelectorAll(".region").forEach(b => b.addEventListener("click", ()
 // karta oferty (taka sama jak w build.py dla „podobnych ofert”)
 function card(d, eager=false){
   const left = d.src === "indomito" ? `<span class="tag own">${d.reserved ? T.tag_res : T.tag_own}</span>`
+             : d.mk === "resale" ? `<span class="tag dark">${T.tag_resale}</span>`
              : (d.beach > 0 && d.beach <= 1000) ? `<span class="tag dark">${T.tag_beach}</span>` : `<span class="tag dark">${T.tag_new}</span>`;
   const right = d.pool ? `<span class="tag">${T.tag_pool}</span>` : "<span></span>";
   const params = [
@@ -272,11 +278,13 @@ const STORE = "ind-filters-" + LANG;
 function filters(){
   let min = +$("#fPriceMin").value, max = +$("#fPrice").value;
   if (min && max && min > max) { [min, max] = [max, min]; $("#fPriceMin").value = min; $("#fPrice").value = max; }
-  return { town:$("#fTown").value.trim(), grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, min, price:max,
+  const mk = (document.querySelector('input[name="mk"]:checked') || {}).value || "";
+  return { mk, town:$("#fTown").value.trim(), grp:$("#fGrp").value, type:$("#fType").value, beds:+$("#fBeds").value, min, price:max,
            sort:$("#fSort").value, pool:$("#fPool").checked, beach:$("#fBeach").checked, tour:$("#fTour").checked, golf:$("#fGolf").checked, sea:$("#fSea").checked };
 }
 function describe(f){
   const p = [];
+  if (f.mk) p.push(f.mk === "resale" ? T.crit_resale : T.crit_new);
   if (f.town) p.push(`“${f.town}”`);
   if (f.grp) p.push($("#fGrp").selectedOptions[0].textContent);
   if (f.type) p.push($("#fType").selectedOptions[0].textContent);
@@ -293,6 +301,7 @@ function describe(f){
 function apply(reset=true){
   const f = filters(), q = fold(f.town);
   list = DATA.filter(d =>
+    (!f.mk || (d.mk || "new") === f.mk) &&
     (!q || fold(d.town).includes(q) || fold(d.title).includes(q) || fold(d.region).includes(q)) &&
     (!f.grp || d.grp === f.grp) && (!f.type || (f.type.startsWith("g:") ? d.k === f.type.slice(2) : d.type === f.type)) && d.beds >= f.beds &&
     (!f.min || d.price >= f.min) && (!f.price || (d.price && d.price <= f.price)) &&
@@ -318,6 +327,7 @@ $("#search").addEventListener("submit", e => {
   $("#oferty").scrollIntoView({behavior: smooth()});
 });
 $("#fSort").addEventListener("change", () => apply());
+document.querySelectorAll('input[name="mk"]').forEach(r => r.addEventListener("change", () => apply()));
 $("#editBtn").addEventListener("click", () => { $("#szukaj").scrollIntoView({behavior: smooth()}); setTimeout(() => $("#fTown").focus({preventScroll:true}), 450); });
 $("#resetBtn").addEventListener("click", () => { $("#search").reset(); apply(); });
 $("#moreBtn").addEventListener("click", () => { shown += PAGE; render(); });
@@ -325,7 +335,8 @@ $("#moreBtn").addEventListener("click", () => { shown += PAGE; render(); });
 // przywróć ostatnie kryteria
 try {
   const s = JSON.parse(localStorage.getItem(STORE) || "null");
-  if (s) { $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0;
+  if (s) { const r = document.querySelector(`input[name="mk"][value="${s.mk||""}"]`); if (r) r.checked = true;
+           $("#fTown").value=s.town||""; $("#fGrp").value=s.grp||""; $("#fType").value=s.type||""; $("#fBeds").value=s.beds||0;
            $("#fPriceMin").value=s.min||0; $("#fPrice").value=s.price||0;
            $("#fSort").value=s.sort||"new"; $("#fPool").checked=!!s.pool; $("#fBeach").checked=!!s.beach; $("#fTour").checked=!!s.tour; $("#fGolf").checked=!!s.golf; $("#fSea").checked=!!s.sea;
            if ($("#fType").value !== (s.type||"")) $("#fType").value = ""; }
