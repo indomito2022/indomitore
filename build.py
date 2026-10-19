@@ -273,7 +273,9 @@ def fetch_notion(token, db_id, dist):
         out.append({
             "ref": ref, "src": "indomito", "market": MARKET.get(sel("Rynek"), "resale"), "price": int(num("Cena")),
             "type": dict(zip(LANGS, NOTION_TYPES.get(sel("Typ"), (sel("Typ"),) * 3))),
-            "town": sel("Miejscowość"), "area": "", "grp": grp, "inland": False, "costa": sel("Region"),
+            # „Okolica” (np. Sierra Cortina) pokazujemy jako lokalizację, a miejscowość (Finestrat) obok
+            "town": txt("Okolica").strip() or sel("Miejscowość"),
+            "area": sel("Miejscowość") if txt("Okolica").strip() else "", "grp": grp, "inland": False, "costa": sel("Region"),
             "beds": int(num("Sypialnie")), "baths": int(num("Łazienki")), "m2": int(num("Metraż m²")), "plot": 0,
             "beach": 0, "pool": any("Basen" in a for a in amen), "lat": None, "lng": None,
             "title": {"pl": txt("Nazwa"), "es": txt("Nazwa ES"), "en": txt("Nazwa EN")},
@@ -523,7 +525,7 @@ def offer_page(p, lang, props, stats, ver, tpl):
     meta = (" ".join(desc)[:155].rsplit(" ", 1)[0] + "…") if desc else f"{title}, {p['town']}, {region}."
     ctx.update({
         "o_title": E(title), "o_price": E(price), "o_refno": E(p["ref"]), "o_region": E(region), "o_town": E(p["town"]),
-        "o_loc": E(f'{p["town"]} · {region}' + (f" · {beach}" if beach else "")),
+        "o_loc": E(f'{town_full} · {region}' + (f" · {beach}" if beach else "")),
         "o_meta": E(meta), "o_img": E(imgs[0] if re.match(r"https?://", imgs[0]) else SITE + imgs[0]),
         "o_nphotos": E(f'{n} {j["photos"]}'), "o_wa": E(wa_link(msg)),
         "o_mail_subj": urllib.parse.quote(f'{t["o_ref"]} {p["ref"]}'),
