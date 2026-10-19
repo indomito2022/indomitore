@@ -10,6 +10,7 @@ from statistics import median
 E = html.escape
 GUIDE = "poradnik-zakup-nieruchomosci-w-hiszpanii/"
 GUIDE_PDF = "poradnik/Indomito-poradnik-zakup-nieruchomosci-w-hiszpanii.pdf"
+GUIDE_ON = False  # poradnik wyłączony na prośbę Klaudii (19.10.2026) – nie publikować bez jej zgody
 TOWNS_HUB = "nieruchomosci/"
 OFFICE = "polskie-biuro-nieruchomosci-w-hiszpanii/"
 MAX_CARDS = 24
@@ -103,7 +104,7 @@ CATS = [
 <p><strong>Costa Blanca Północ</strong> (Benidorm, Finestrat, Altea, Calpe, Jávea, Denia) to góry schodzące do morza, widoki, zatoczki i bardziej prestiżowe lokalizacje. Tu częściej znajdziesz wille z widokiem na morze i apartamenty premium.</p>
 <p><strong>Costa Blanca Południe</strong> (Torrevieja, Orihuela Costa, Guardamar, Pilar de la Horadada) to długie, piaszczyste plaże, pola golfowe, spokojniejsze tempo i niższe ceny. Popularny wybór na pierwsze mieszkanie w Hiszpanii i pod wynajem.</p>
 <h2>Nowe czy z rynku wtórnego?</h2>
-<p>W ofercie masz zarówno nowe inwestycje od deweloperów (często z basenem, ogrodem i solarium, z płatnościami rozłożonymi na etapy budowy), jak i nieruchomości z rynku wtórnego, gotowe do zamieszkania od razu. Różnią się podatkami i procedurą – wszystko wyjaśniam w <a href="{guide}">bezpłatnym poradniku zakupu</a>.</p>
+<p>W ofercie masz zarówno nowe inwestycje od deweloperów (często z basenem, ogrodem i solarium, z płatnościami rozłożonymi na etapy budowy), jak i nieruchomości z rynku wtórnego, gotowe do zamieszkania od razu. Różnią się podatkami i procedurą – chętnie wyjaśnię różnice na przykładzie konkretnej oferty.</p>
 """,
     },
     {
@@ -164,7 +165,7 @@ CATS = [
 <h2>Dom w Hiszpanii – od czego zacząć?</h2>
 <p>Zacznij od regionu i budżetu. <strong>Costa Blanca</strong> (prowincja Alicante) oferuje największy wybór: od willi z widokiem na morze na północy po domy blisko pól golfowych na południu. <strong>Costa Cálida</strong> (region Murcji) przyciąga ciepłą laguną Mar Menor, golfem i niższymi cenami – a także nieco niższym podatkiem przy zakupie z rynku wtórnego.</p>
 <h2>Koszty zakupu domu w Hiszpanii</h2>
-<p>Przy nowym domu płacisz 10% IVA i podatek od aktu (AJD), przy domu z rynku wtórnego – podatek od przeniesienia własności (ITP): 9% w regionie Walencji i 7,75% w Murcji (stan na 2026 r.). Do tego notariusz, rejestr i prawnik. Szczegóły i przykładowe wyliczenia znajdziesz w <a href="{guide}">poradniku zakupu krok po kroku</a>.</p>
+<p>Przy nowym domu płacisz 10% IVA i podatek od aktu (AJD), przy domu z rynku wtórnego – podatek od przeniesienia własności (ITP): 9% w regionie Walencji i 7,75% w Murcji (stan na 2026 r.). Do tego notariusz, rejestr i prawnik. Chętnie policzę dokładne koszty dla wybranej oferty.</p>
 """,
     },
     {
@@ -198,7 +199,7 @@ CATS = [
 <li><strong>Podatki od najmu:</strong> jako nierezydent rozliczasz w Hiszpanii podatek IRNR od dochodu z najmu (19% dla rezydentów UE, z możliwością odliczenia kosztów).</li>
 <li><strong>Nowe czy wtórne:</strong> nowe zwykle wynajmują się lepiej i mają niższe koszty utrzymania; wtórne – są od razu gotowe i często w lepszej lokalizacji.</li>
 </ul>
-<p>Pomogę policzyć opłacalność konkretnej oferty i sprawdzić możliwość licencji. Zacznij od <a href="{guide}">bezpłatnego poradnika</a> albo napisz do mnie.</p>
+<p>Pomogę policzyć opłacalność konkretnej oferty i sprawdzić możliwość licencji. Napisz do mnie, a przygotuję wybór ofert pod Twój budżet.</p>
 """,
     },
 ]
@@ -335,6 +336,11 @@ def build_pages(B, props, stats, ver, dist):
             for i, p in enumerate(sort_props(ps)[:MAX_CARDS])]})
 
     guide_banner = lambda base: (
+        '<aside class="seo-lm"><div><div class="eyebrow">Polskie biuro nieruchomości</div>'
+        '<h2>Szukasz czegoś konkretnego?</h2>'
+        '<p>Napisz, jaki masz budżet i czego szukasz – przygotuję wybór ofert dopasowany do Ciebie, po polsku.</p></div>'
+        f'<a class="btn gold" href="{B.wa_link(B.T["pl"]["js"]["wa_hello"])}" target="_blank" rel="noopener">Napisz na WhatsApp</a></aside>'
+    ) if not GUIDE_ON else (
         f'<aside class="seo-lm"><div><div class="eyebrow">Bezpłatny poradnik PDF</div>'
         f'<h2>Zakup nieruchomości w Hiszpanii krok po kroku</h2>'
         f'<p>Koszty i podatki w 2026 r., NIE, kredyt, umowy i lista kontrolna – wszystko po polsku, w jednym pliku.</p></div>'
@@ -344,7 +350,7 @@ def build_pages(B, props, stats, ver, dist):
         cats = "".join(f'<li><a href="{base}{c["slug"]}">{E(c["nav"])}</a></li>' for c in CATS if c["slug"] != current)
         tw = "".join(f'<li><a href="{base}{town_url(n)}">{E(n)}</a></li>' for n in top_towns[:18] if town_url(n) != current)
         return (f'<section class="seo-rel"><div><h2>Szukaj dalej</h2><ul>{cats}<li><a href="{base}{OFFICE}">Polskie biuro nieruchomości w Hiszpanii</a></li>'
-                f'<li><a href="{base}{GUIDE}">Poradnik: zakup krok po kroku</a></li></ul></div>'
+                + (f'<li><a href="{base}{GUIDE}">Poradnik: zakup krok po kroku</a></li>' if GUIDE_ON else "") + '</ul></div>'
                 f'<div><h2>Popularne miejscowości</h2><ul>{tw}<li><a href="{base}{TOWNS_HUB}">Wszystkie miejscowości</a></li></ul></div></section>')
 
     def contact_cta(ctx):
@@ -422,7 +428,6 @@ def build_pages(B, props, stats, ver, dist):
         intro += (f"<p>Obecnie mam tu {offers_word(len(ps))}: " + ", ".join(parts) + "."
                   + (f" Ceny zaczynają się od {price_pl(prices[0])}, a połowa ofert kosztuje mniej niż {price_pl(int(median(prices)) // 1000 * 1000)}." if prices else "")
                   + "</p>")
-        intro += f'<p>Sprawdź też, ile wynoszą podatki i koszty zakupu – wszystko opisałam w <a href="{{guide}}">poradniku zakupu nieruchomości w Hiszpanii</a>.</p>'
         q = {"town": n}
         def body(ctx, base, ps=ps, intro=intro, near=near, near_towns=near_towns, q=q, page=page, n=n, L=L):
             near_block = ""
@@ -476,7 +481,7 @@ def build_pages(B, props, stats, ver, dist):
 </ul>
 <h2>Dlaczego polskie biuro?</h2>
 <p>Zakup w obcym kraju to inne prawo, inne podatki i dokumenty w obcym języku. Ze mną rozmawiasz po polsku, rozumiesz każdy krok i każdy koszt, zanim cokolwiek podpiszesz. Przy nowych inwestycjach moje wynagrodzenie płaci zwykle deweloper.</p>
-<p>Zacznij od <a href="{base}{GUIDE}">poradnika zakupu krok po kroku</a> albo napisz do mnie – przygotuję wybór ofert dla Ciebie.</p>
+<p>Napisz do mnie – przygotuję wybór ofert dopasowany do Ciebie.</p>
 """
         lst = f'<section class="seo-list"><h2>Moje oferty</h2><div class="grid">{"".join(B.card_html(p, "pl", base) for p in own[:6])}</div></section>' if own else ""
         return (f'<div class="seo-grid"><article class="seo-text">{text}</article>{guide_banner(base)}</div>{lst}'
@@ -487,6 +492,8 @@ def build_pages(B, props, stats, ver, dist):
               "Kupujesz mieszkanie lub dom w Hiszpanii? Przeprowadzę Cię przez cały zakup po polsku – od wyboru oferty po akt notarialny i klucze.",
               [("Polskie biuro nieruchomości w Hiszpanii", OFFICE)], office, B.SITE + "portret.jpg", agent_ld)
 
+    if not GUIDE_ON:
+        return urls
     # poradnik + lead magnet
     article_ld = ld({"@context": "https://schema.org", "@type": "Article",
                      "headline": "Zakup nieruchomości w Hiszpanii krok po kroku – poradnik 2026",
@@ -543,5 +550,5 @@ def build_pages(B, props, stats, ver, dist):
 def footer_links(base):
     """Linki SEO w stopce (tylko po polsku)."""
     items = [(c["nav"], c["slug"]) for c in CATS] + [("Polskie biuro nieruchomości w Hiszpanii", OFFICE),
-                                                    ("Poradnik: zakup krok po kroku", GUIDE), ("Miejscowości", TOWNS_HUB)]
+                                                    ("Miejscowości", TOWNS_HUB)] + ([("Poradnik: zakup krok po kroku", GUIDE)] if GUIDE_ON else [])
     return '<nav class="f-seo" aria-label="Popularne wyszukiwania">' + "".join(f'<a href="{base}{u}">{E(n)}</a>' for n, u in items) + "</nav>"

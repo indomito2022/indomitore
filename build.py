@@ -429,7 +429,7 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
         "footer_offers": T[lang]["footer_offers"].replace("{d}", stats["updated"]),
         "privacy_url": base + PRIVACY[lang],
         "seo_footer": seo.footer_links(base) if lang == "pl" else "",
-        "nav_extra": f'<a href="{base}{seo.GUIDE}">Poradnik</a>' if lang == "pl" else "",
+        "nav_extra": f'<a href="{base}{seo.GUIDE}">Poradnik</a>' if lang == "pl" and seo.GUIDE_ON else "",
     })
     j = T[lang]["js"]
     ctx["form_cfg"] = json.dumps({"lang": lang, "endpoint": FORM_ENDPOINT, "sending": j["f_sending"], "ok": j["f_ok"],
@@ -621,9 +621,12 @@ def home_page(lang, props, featured, stats, hero, files, ver, tpl):
         d["img"] = src(d["img"], base)
     out = render(tpl, ctx)
     out = (out.replace("/*__DATA__*/[]", js(data)).replace("/*__HERO__*/{}", js(h)).replace("/*__T__*/{}", js(t["js"])))
-    agent = {"@context": "https://schema.org", "@type": "RealEstateAgent", "name": "Indómito Real Estate", "url": SITE + page,
+    agent = {"@context": "https://schema.org", "@type": "RealEstateAgent", "@id": SITE + "#indomito", "name": "Indómito Real Estate",
+             "alternateName": ["Indomito Real Estate", "Indómito", "Indomito", "Indómito Real Estate – Klaudia Szafran"], "url": SITE + page,
              "logo": SITE + "logo-pelne.png", "image": SITE + "portret.jpg", "telephone": "+34 613 15 27 55", "email": "info@indomitore.com",
-             "founder": {"@type": "Person", "name": "Klaudia Szafran"}, "priceRange": "€€",
+             "founder": {"@type": "Person", "@id": SITE + "#klaudia", "name": "Klaudia Szafran", "alternateName": "Claudia Szafran",
+                         "jobTitle": "Agentka nieruchomości (RAICV 4368)", "image": SITE + "portret.jpg", "url": SITE,
+                         "worksFor": {"@id": SITE + "#indomito"}, "sameAs": ["https://www.instagram.com/indomitore/"]}, "priceRange": "€€",
              "address": {"@type": "PostalAddress", "streetAddress": "Calle Marqués de Sotelo 5, bajo 5", "postalCode": "46002", "addressLocality": "Valencia", "addressCountry": "ES"},
              "areaServed": ["Costa Blanca", "Costa Cálida"], "knowsLanguage": ["pl", "es", "en"], "sameAs": ["https://www.instagram.com/indomitore/"]}
     site = {"@context": "https://schema.org", "@type": "WebSite", "name": "Indómito Real Estate", "url": SITE, "inLanguage": lang}
@@ -676,10 +679,10 @@ def copy_static(dist, featured):
             shutil.copyfile(s, os.path.join(dist, name)); out[key] = name
     # poradnik PDF (lead magnet): plik w głównym folderze repo -> dist/poradnik/
     pdf = os.path.basename(seo.GUIDE_PDF)
-    if asset(pdf):
+    if seo.GUIDE_ON and asset(pdf):
         os.makedirs(os.path.join(dist, "poradnik"), exist_ok=True)
         shutil.copyfile(asset(pdf), os.path.join(dist, seo.GUIDE_PDF)); out["pdf"] = seo.GUIDE_PDF
-    else:
+    elif seo.GUIDE_ON:
         print(f"! brak pliku {pdf} – link do poradnika PDF nie zadziała", file=sys.stderr)
     # Instagram (Behold.so): instagram.txt → 1. linia ID feedu, 2. linia (opcjonalnie) link do profilu
     s = asset("instagram.txt")
