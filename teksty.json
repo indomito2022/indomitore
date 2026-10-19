@@ -146,7 +146,7 @@
       "beach_km": "{n} km do plaży",
       "photos": "zdjęć",
       "tag_beach": "Blisko plaży",
-      "tag_new": "Nowa budowa",
+      "tag_new": "Nowe budownictwo",
       "tag_pool": "Basen",
       "tag_own": "Oferta Indómito",
       "tag_res": "Zarezerwowana",
@@ -186,7 +186,8 @@
       "crit_sea": "widok na morze",
       "tag_resale": "Rynek wtórny",
       "crit_new": "Nowe inwestycje",
-      "crit_resale": "Rynek wtórny"
+      "crit_resale": "Rynek wtórny",
+      "tag_sea": "Widok na morze"
     },
     "s_price_from": "Cena od",
     "s_price_to": "Cena do",
@@ -415,7 +416,8 @@
       "crit_sea": "vistas al mar",
       "tag_resale": "Segunda mano",
       "crit_new": "Obra nueva",
-      "crit_resale": "Segunda mano"
+      "crit_resale": "Segunda mano",
+      "tag_sea": "Vistas al mar"
     },
     "s_price_from": "Precio mín.",
     "s_price_to": "Precio máx.",
@@ -644,7 +646,8 @@
       "crit_sea": "sea views",
       "tag_resale": "Resale",
       "crit_new": "New build",
-      "crit_resale": "Resale"
+      "crit_resale": "Resale",
+      "tag_sea": "Sea views"
     },
     "s_price_from": "Min price",
     "s_price_to": "Max price",

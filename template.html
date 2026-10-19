@@ -230,7 +230,7 @@ function card(d, eager=false){
   const left = d.src === "indomito" ? `<span class="tag own">${d.reserved ? T.tag_res : T.tag_own}</span>`
              : d.mk === "resale" ? `<span class="tag dark">${T.tag_resale}</span>`
              : (d.beach > 0 && d.beach <= 1000) ? `<span class="tag dark">${T.tag_beach}</span>` : `<span class="tag dark">${T.tag_new}</span>`;
-  const right = d.pool ? `<span class="tag">${T.tag_pool}</span>` : "<span></span>";
+  const right = `<span class="tags-r">${d.sv ? `<span class="tag">${T.tag_sea}</span>` : ""}${d.pool ? `<span class="tag">${T.tag_pool}</span>` : ""}</span>`;
   const params = [
     d.beds ? `<span><b class="num">${d.beds}</b> ${T.beds_short}</span>` : "",
     d.baths ? `<span><b class="num">${d.baths}</b> ${T.baths_short}</span>` : "",

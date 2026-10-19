@@ -451,7 +451,8 @@ def card_html(p, lang, base, eager=False):
         left = f'<span class="tag dark">{E(j["tag_beach"])}</span>'
     else:
         left = f'<span class="tag dark">{E(j["tag_new"])}</span>'
-    right = f'<span class="tag">{E(j["tag_pool"])}</span>' if p["pool"] else "<span></span>"
+    right = "".join(f'<span class="tag">{E(j[k])}</span>' for k, on in (("tag_sea", p.get("sea")), ("tag_pool", p["pool"])) if on)
+    right = f'<span class="tags-r">{right}</span>'
     params = "".join(x for x in (
         f'<span><b class="num">{p["beds"]}</b> {E(j["beds_short"])}</span>' if p["beds"] else "",
         f'<span><b class="num">{p["baths"]}</b> {E(j["baths_short"])}</span>' if p["baths"] else "",
