@@ -93,6 +93,7 @@ REGION = {  # costa z feedu -> (grupa, w głębi lądu?)
     "Costa Blanca North": ("cbn", False), "Costa Blanca North - Inland": ("cbn", True),
     "Costa Blanca South": ("cbs", False), "Costa Blanca South - Inland": ("cbs", True),
     "Costa Calida": ("cc", False), "Costa Calida - Inland": ("cc", True),
+    "Costa de Almeria": ("ca", False), "Costa de Almeria - Inland": ("ca", True),
 }
 FEATS = {  # cecha z feedu -> (pl, es, en)
     "Gated": ("Osiedle zamknięte", "Urbanización cerrada", "Gated community"),
@@ -268,7 +269,7 @@ def fetch_notion(token, db_id, dist):
                 print("  ! zdjęcie", ref, e, file=sys.stderr)
         if not imgs:  # zdjęcia jako linki (jeden w linii), np. z MLS Costa
             imgs = [u.strip() for u in re.split(r"[\s,]+", txt("Zdjęcia – linki")) if re.match(r"https?://", u.strip())][:30]
-        grp = {"Costa Blanca Norte": "cbn", "Costa Blanca Sur": "cbs", "Costa Cálida": "cc"}.get(sel("Region"), "inne")
+        grp = {"Costa Blanca Norte": "cbn", "Costa Blanca Sur": "cbs", "Costa Cálida": "cc", "Costa de Almería": "ca"}.get(sel("Region"), "inne")
         amen = [o["name"] for o in (pr.get("Udogodnienia", {}).get("multi_select") or [])]
         if not imgs: continue
         out.append({

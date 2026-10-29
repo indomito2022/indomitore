@@ -35,7 +35,7 @@
         <div class="f town"><label for="fTown">{{s_town}}</label>
           <input id="fTown" type="search" list="towns" placeholder="{{s_town_ph}}" autocomplete="off" enterkeyhint="search"><datalist id="towns"></datalist></div>
         <div class="f"><label for="fGrp">{{s_region}}</label>
-          <select id="fGrp"><option value="">{{s_all}}</option><option value="cb">{{reg_cb}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></div>
+          <select id="fGrp"><option value="">{{s_all}}</option><option value="cb">{{reg_cb}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option><option value="ca">{{reg_ca}}</option></select></div>
         <div class="f"><label for="fType">{{s_type}}</label><select id="fType"><option value="">{{s_all}}</option>
           <optgroup label="{{t_groups}}"><option value="g:apt">{{t_apt}}</option><option value="g:house">{{t_house}}</option><option value="g:villa">{{t_villa}}</option><option value="g:hv">{{t_hv}}</option></optgroup>
           <optgroup label="{{t_exact}}" id="fTypeExact"></optgroup></select></div>
@@ -96,6 +96,7 @@
       <button class="region" type="button" data-grp="cbn"><h3>{{reg_cbn}}</h3><p>{{reg_cbn_p}}</p><span class="cnt" data-cnt="cbn"></span></button>
       <button class="region" type="button" data-grp="cbs"><h3>{{reg_cbs}}</h3><p>{{reg_cbs_p}}</p><span class="cnt" data-cnt="cbs"></span></button>
       <button class="region" type="button" data-grp="cc"><h3>{{reg_cc}}</h3><p>{{reg_cc_p}}</p><span class="cnt" data-cnt="cc"></span></button>
+      <button class="region" type="button" data-grp="ca"><h3>{{reg_ca}}</h3><p>{{reg_ca_p}}</p><span class="cnt" data-cnt="ca"></span></button>
     </div>
   </div>
 </section>
@@ -168,7 +169,7 @@
       <label>{{f_phone}}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+48 / +34 …" required></label>
       <label>{{f_email}}<input name="email" type="email" autocomplete="email" required></label>
       <label>{{f_budget}}<select name="budget"><option value="b1">{{f_b1}}</option><option value="b2">{{f_b2}}</option><option value="b3">{{f_b3}}</option><option value="b4">{{f_b4}}</option></select></label>
-      <label class="full">{{f_region}}<select name="region"><option value="">{{f_dunno}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option></select></label>
+      <label class="full">{{f_region}}<select name="region"><option value="">{{f_dunno}}</option><option value="cbn">{{reg_cbn}}</option><option value="cbs">{{reg_cbs}}</option><option value="cc">{{reg_cc}}</option><option value="ca">{{reg_ca}}</option></select></label>
       <label class="full">{{f_msg}}<textarea name="msg" placeholder="{{f_msg_ph}}"></textarea></label>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="full consent"><input type="checkbox" name="consent" required> <span>{{f_consent}} <a href="{{privacy_url}}">{{priv}}</a></span></label>

@@ -58,7 +58,7 @@ NOTE = {
     "Águilas": "Kameralne zatoczki i czysta woda na południu Costa Cálida.",
     "San Javier": "Miasteczko nad Mar Menor z nadmorską Santiago de la Ribera, blisko lotniska Murcja.",
 }
-REG_PL = {"cbn": "Costa Blanca Północ", "cbs": "Costa Blanca Południe", "cc": "Costa Cálida"}
+REG_PL = {"cbn": "Costa Blanca Północ", "cbs": "Costa Blanca Południe", "cc": "Costa Cálida", "ca": "Costa de Almería"}
 
 
 def slug(s):
@@ -409,7 +409,7 @@ def build_pages(B, props, stats, ver, dist):
     for n in top_towns:
         ps = towns[n]
         page = town_url(n)
-        grp = max({"cbn", "cbs", "cc"}, key=lambda g: sum(p["grp"] == g for p in ps))
+        grp = max({"cbn", "cbs", "cc", "ca"}, key=lambda g: sum(p["grp"] == g for p in ps))
         reg = REG_PL[grp]
         kinds = {k: sum(p.get("kind") == k for p in ps) for k in ("apt", "house", "villa")}
         prices = sorted(p["price"] for p in ps if p["price"])
@@ -445,8 +445,8 @@ def build_pages(B, props, stats, ver, dist):
     # lista miejscowości
     def hub(ctx, base):
         out = ""
-        for g in ("cbn", "cbs", "cc"):
-            ts = sorted((t for t in towns if max({"cbn", "cbs", "cc"}, key=lambda x: sum(p["grp"] == x for p in towns[t])) == g), key=lambda t: t)
+        for g in ("cbn", "cbs", "cc", "ca"):
+            ts = sorted((t for t in towns if max({"cbn", "cbs", "cc", "ca"}, key=lambda x: sum(p["grp"] == x for p in towns[t])) == g), key=lambda t: t)
             if not ts: continue
             li = "".join(f'<li><a href="{base}{town_url(t)}">{E(t)}</a><span class="num">{len(towns[t])}</span></li>' for t in ts)
             out += f'<section class="seo-towns"><h2>{REG_PL[g]}</h2><ul>{li}</ul></section>'

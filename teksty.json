@@ -230,7 +230,9 @@
     "mk_rent": "Wynajem",
     "sp_market": "Rynek",
     "t_hv": "Domy i wille",
-    "reg_cb": "Costa Blanca – całe wybrzeże"
+    "reg_cb": "Costa Blanca – całe wybrzeże",
+    "reg_ca": "Costa de Almería",
+    "reg_ca_p": "Pulpí, San Juan de los Terreros, Mojácar, Vera. Dzikie plaże, najwięcej słońca w Europie i ceny niższe niż na Costa Blanca."
   },
   "es": {
     "lang_name": "Español",
@@ -463,7 +465,9 @@
     "mk_rent": "Alquiler",
     "sp_market": "Mercado",
     "t_hv": "Casas y villas",
-    "reg_cb": "Costa Blanca – toda"
+    "reg_cb": "Costa Blanca – toda",
+    "reg_ca": "Costa de Almería",
+    "reg_ca_p": "Pulpí, San Juan de los Terreros, Mojácar, Vera. Playas vírgenes, el sol más generoso de Europa y precios más bajos que en la Costa Blanca."
   },
   "en": {
     "lang_name": "English",
@@ -696,6 +700,8 @@
     "mk_rent": "Rental",
     "sp_market": "Market",
     "t_hv": "Houses and villas",
-    "reg_cb": "Costa Blanca – all"
+    "reg_cb": "Costa Blanca – all",
+    "reg_ca": "Costa de Almería",
+    "reg_ca_p": "Pulpí, San Juan de los Terreros, Mojácar, Vera. Unspoilt beaches, Europe's sunniest coast and lower prices than the Costa Blanca."
   }
 }
