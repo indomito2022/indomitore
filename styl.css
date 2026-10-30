@@ -51,7 +51,8 @@ nav.links a:hover{color:var(--gold-text)}
 .hero video{opacity:0;transition:opacity 1.2s ease}
 .hero video.on{opacity:1}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:linear-gradient(90deg,rgba(14,11,7,.52) 0%,rgba(14,11,7,.30) 45%,rgba(14,11,7,.10) 100%),linear-gradient(180deg,rgba(14,11,7,0) 55%,rgba(14,11,7,.45) 100%)}
+  background:linear-gradient(90deg,rgba(14,11,7,.26) 0%,rgba(14,11,7,.10) 45%,rgba(14,11,7,0) 100%),linear-gradient(180deg,rgba(14,11,7,0) 60%,rgba(14,11,7,.30) 100%)}
+.hero h1,.hero p.lead,.hero .eyebrow{text-shadow:0 1px 3px rgba(0,0,0,.35),0 2px 18px rgba(0,0,0,.30)}
 .hero .wrap{width:100%;padding-block:110px 44px;display:grid;gap:40px}
 .hero .eyebrow{color:#EBDDB4}
 .hero h1{font-weight:500;font-size:clamp(42px,6.4vw,84px);line-height:1.02;max-width:13ch;margin-top:20px}
