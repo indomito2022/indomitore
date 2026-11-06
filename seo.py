@@ -550,5 +550,5 @@ def build_pages(B, props, stats, ver, dist):
 def footer_links(base):
     """Linki SEO w stopce (tylko po polsku)."""
     items = [(c["nav"], c["slug"]) for c in CATS] + [("Polskie biuro nieruchomości w Hiszpanii", OFFICE),
-                                                    ("Miejscowości", TOWNS_HUB)] + ([("Poradnik: zakup krok po kroku", GUIDE)] if GUIDE_ON else [])
+                                                    ("Miejscowości", TOWNS_HUB)] + ([("Poradnik: zakup krok po kroku", GUIDE)] if GUIDE_ON else []) + __import__('blog').footer_item()
     return '<nav class="f-seo" aria-label="Popularne wyszukiwania">' + "".join(f'<a href="{base}{u}">{E(n)}</a>' for n, u in items) + "</nav>"

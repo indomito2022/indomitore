@@ -26,6 +26,7 @@ Tylko biblioteka standardowa Pythona.
 """
 import argparse, html, json, os, re, shutil, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 import seo  # podstrony SEO po polsku (seo.py)
+import blog  # blog po polsku (blog.py + folder blog/)
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -431,7 +432,7 @@ def common_ctx(lang, page, paths, extra_wa, stats, ver):
         "footer_offers": T[lang]["footer_offers"].replace("{d}", stats["updated"]),
         "privacy_url": base + PRIVACY[lang],
         "seo_footer": seo.footer_links(base) if lang == "pl" else "",
-        "nav_extra": f'<a href="{base}{seo.GUIDE}">Poradnik</a>' if lang == "pl" and seo.GUIDE_ON else "",
+        "nav_extra": (f'<a href="{base}{seo.GUIDE}">Poradnik</a>' if lang == "pl" and seo.GUIDE_ON else "") + blog.nav_link(base, lang),
     })
     j = T[lang]["js"]
     ctx["form_cfg"] = json.dumps({"lang": lang, "endpoint": FORM_ENDPOINT, "sending": j["f_sending"], "ok": j["f_ok"],
@@ -741,6 +742,7 @@ def build(props, dist):
         page, out = privacy_page(lang, stats, ver)
         write(dist, page, out); urls.append(page)
     urls += seo.build_pages(sys.modules[__name__], props, stats, ver, dist)
+    urls += blog.build_pages(sys.modules[__name__], props, stats, ver, dist)
     write(dist, "404.html", not_found_page(stats, ver))
     with open(os.path.join(dist, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
