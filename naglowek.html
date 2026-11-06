@@ -2,7 +2,7 @@
   <div class="wrap">
     <a class="brand" href="{{home}}" aria-label="{{home_aria}}"><img src="{{base}}logo-pelne.png" alt="Indómito Real Estate" width="137" height="56"></a>
     <div class="head-r">
-      <nav class="links">
+      <nav class="links" id="mainNav">
         <a href="{{home}}#oferty">{{nav_offers}}</a>
         <a href="{{home}}#regiony">{{nav_regions}}</a>
         <a href="{{home}}#o-mnie">{{nav_about}}</a>
@@ -11,6 +11,18 @@
         <a class="btn small" href="{{home}}#kontakt">{{nav_contact}}</a>
       </nav>
       <nav class="langs" aria-label="{{lang_aria}}">{{langs}}</nav>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-controls="mainNav" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
+<script>
+(function(){
+  var h=document.querySelector("header.top"),b=h&&h.querySelector(".menu-btn");if(!b)return;
+  function set(o){h.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false");}
+  b.addEventListener("click",function(e){e.stopPropagation();set(!h.classList.contains("open"));});
+  h.querySelectorAll("nav.links a").forEach(function(a){a.addEventListener("click",function(){set(false);});});
+  document.addEventListener("click",function(e){if(!h.contains(e.target))set(false);});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});
+  addEventListener("resize",function(){if(innerWidth>900)set(false);});
+})();
+</script>
