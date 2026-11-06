@@ -5,6 +5,7 @@ date: 2026-11-03
 slug: costs-of-buying-property-in-spain
 lead: Taxes and fees when buying property in Spain, with the rates in force in 2026.
 image: willa-costa-blanca.jpg
+share_image: koszty-zakupu-kalkulator.jpg
 ---
 The asking price is not the whole story. When you buy an apartment or a house in Spain, you need to add taxes and fees on top. Here are all the purchase costs in one place, with the rates in force in 2026 on the Costa Blanca and the Costa Cálida.
 

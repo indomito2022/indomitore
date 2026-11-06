@@ -5,6 +5,7 @@ date: 2026-11-03
 slug: koszty-zakupu-nieruchomosci-w-hiszpanii
 lead: Podatki i opłaty przy zakupie nieruchomości w Hiszpanii – aktualne stawki na 2026 rok.
 image: willa-costa-blanca.jpg
+share_image: koszty-zakupu-kalkulator.jpg
 ---
 Cena z ogłoszenia to nie wszystko. Przy zakupie mieszkania lub domu w Hiszpanii trzeba doliczyć podatki i opłaty. To pytanie słyszę od klientów z Polski najczęściej, dlatego zebrałam wszystkie koszty zakupu w jednym miejscu, z aktualnymi stawkami na 2026 rok.
 

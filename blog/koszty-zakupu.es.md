@@ -5,6 +5,7 @@ date: 2026-11-03
 slug: gastos-compra-vivienda-espana
 lead: Impuestos y gastos al comprar una vivienda en España, con los tipos vigentes en 2026.
 image: willa-costa-blanca.jpg
+share_image: koszty-zakupu-kalkulator.jpg
 ---
 El precio del anuncio no es lo único que pagas. Al comprar un piso o una casa en España hay que sumar impuestos y gastos. Aquí tienes todos los costes de la compra reunidos, con los tipos vigentes en 2026 en la Costa Blanca y la Costa Cálida.
 
