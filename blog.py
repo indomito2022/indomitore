@@ -12,6 +12,7 @@ Nagłówek każdego pliku:
     date: 2026-11-10
     slug: koszty-zakupu-nieruchomosci-w-hiszpanii    (adres artykułu w tym języku)
     image: koszty.jpg              (opcjonalnie – zdjęcie z folderu blog/zdjecia/ albo pełny adres https://)
+    share_image: inne.jpg          (opcjonalnie – miniatura przy udostępnianiu, np. na Facebooku/WhatsAppie)
     lead: Krótkie zdanie pod tytułem (opcjonalnie – inaczej pokazuje się description)
     town: Benidorm                 (opcjonalnie – pod artykułem oferty z tej miejscowości)
     draft: true                    (opcjonalnie – szkic, NIE publikuje się)
@@ -300,7 +301,7 @@ def build_pages(B, props, stats, ver, dist):
                         f'<h1>{E(p["title"])}</h1>' + (f'<p class="lead">{E(p.get("lead") or p["description"])}</p>' if p.get("lead") or p.get("description") else "") + '</header>'
                         f'{hero_img}{author}{toc}<div class="seo-text">{body}</div></article>{offers}{cta(ctx, lang)}{more}')
 
-            _, full_img = _img(p.get("image"), "", B)
+            _, full_img = _img(p.get("share_image") or p.get("image"), "", B)
             art_ld = ld({"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["title"],
                          "description": p.get("description", ""), "datePublished": p["d"].isoformat(),
                          "dateModified": p.get("updated", p["d"].isoformat()), "inLanguage": lang,
