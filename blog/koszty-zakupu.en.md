@@ -3,6 +3,7 @@ title: How much does it cost to buy property in Spain in 2026? Taxes and fees
 description: Buying costs in Spain 2026: VAT (IVA), stamp duty (AJD), transfer tax (ITP), notary, land registry and lawyer. Current rates for the Costa Blanca and Murcia, with a worked example.
 date: 2026-11-03
 slug: costs-of-buying-property-in-spain
+lead: Taxes and fees when buying property in Spain, with the rates in force in 2026.
 image: willa-costa-blanca.jpg
 ---
 The asking price is not the whole story. When you buy an apartment or a house in Spain, you need to add taxes and fees on top. Here are all the purchase costs in one place, with the rates in force in 2026 on the Costa Blanca and the Costa Cálida.
@@ -20,7 +21,7 @@ In total, taxes on a new build on the Costa Blanca come to **11.4% of the price*
 
 ## Tourist apartment for holiday rental: 21% VAT you can reclaim
 
-**Tourist apartments** are a different case: units in complexes intended for holiday rental (often on land zoned for tourist or commercial rather than residential use). Legally they are not a "home", so buying from a developer means **21% VAT** instead of 10% (plus AJD).
+**Tourist apartments** are a different case: units in complexes intended for holiday rental. Buying one from a developer means **21% VAT** instead of 10% (plus AJD).
 
 The good news: if you buy such an apartment **to let it to holidaymakers**, you can **claim that VAT back**. The refund is usually requested in the return for the last quarter of the year, filed in January, so you get the money **in the year after the purchase**. Conditions:
 
@@ -49,7 +50,7 @@ Reduced rates exist for some Spanish residents (young first-time buyers of a mai
 These fees apply to both new and resale properties:
 
 - **Notary:** around €600–1,200. Fees follow official scales and depend on the price and on the **number of pages in the deed**. More about the notary's role at the [General Council of Spanish Notaries](https://www.notariado.org).
-- **Land registry** (*Registro de la Propiedad*): around €400–800. You can check a property's legal status through [Registradores de España](https://www.registradores.org).
+- **Land registry** (*Registro de la Propiedad*): around €400–800.
 
 ## Lawyer
 
@@ -61,7 +62,7 @@ For a foreign buyer, a lawyer is essential. They:
 - on a resale: handle **the settlements with the seller** and **transfer the utilities** into your name,
 - usually also **translate at the notary** – normally the lawyer does this, unless you prefer a sworn translator.
 
-Cost: for a €250,000 home, around **€1,500 + VAT**.
+Cost: lawyers' fees vary. They are often **1% of the price + VAT**, but many firms have minimum or fixed fees, usually **€1,000–1,500 + VAT**.
 
 ## NIE and a Spanish bank account
 

@@ -3,6 +3,7 @@ title: ¿Cuánto cuesta comprar una vivienda en España en 2026? Impuestos y gas
 description: Gastos de compra de vivienda en 2026: IVA, AJD, ITP, notaría, registro y abogado. Tipos actuales en la Comunitat Valenciana y Murcia, con un ejemplo de cálculo.
 date: 2026-11-03
 slug: gastos-compra-vivienda-espana
+lead: Impuestos y gastos al comprar una vivienda en España, con los tipos vigentes en 2026.
 image: willa-costa-blanca.jpg
 ---
 El precio del anuncio no es lo único que pagas. Al comprar un piso o una casa en España hay que sumar impuestos y gastos. Aquí tienes todos los costes de la compra reunidos, con los tipos vigentes en 2026 en la Costa Blanca y la Costa Cálida.
@@ -20,7 +21,7 @@ En total, en obra nueva en la Costa Blanca los impuestos suman un **11,4% del pr
 
 ## Apartamento turístico para alquilar: IVA del 21% con posibilidad de devolución
 
-Distinto es el caso de los **apartamentos turísticos**, es decir, unidades en complejos destinados al alquiler turístico (a menudo en suelo de uso turístico o terciario, no residencial). Al no ser legalmente una vivienda, en la compra a promotor se paga un **IVA del 21%** en lugar del 10% (además del AJD).
+Distinto es el caso de los **apartamentos turísticos**, es decir, unidades en complejos destinados al alquiler turístico. En su compra a promotor se paga un **IVA del 21%** en lugar del 10% (además del AJD).
 
 La buena noticia: si compras el apartamento **para alquilarlo a turistas**, puedes **solicitar la devolución de ese IVA**. Normalmente se pide en la declaración del último trimestre del año, que se presenta en enero, por lo que el dinero se recupera **al año siguiente de la compra**. Requisitos:
 
@@ -49,7 +50,7 @@ Existen tipos reducidos para determinados residentes (jóvenes que compran su pr
 Estos gastos existen tanto en obra nueva como en segunda mano:
 
 - **Notaría:** unos 600–1.200 €. Los aranceles son oficiales y el importe depende del precio y del **número de páginas de la escritura**. Más información en el [Consejo General del Notariado](https://www.notariado.org).
-- **Registro de la Propiedad:** unos 400–800 €. Puedes consultar la situación registral de una finca a través de [Registradores de España](https://www.registradores.org).
+- **Registro de la Propiedad:** unos 400–800 €.
 
 ## Abogado
 
@@ -61,7 +62,7 @@ Para un comprador extranjero, el abogado es imprescindible. Se encarga de:
 - en segunda mano: **las liquidaciones con el vendedor** y el **cambio de titularidad de los suministros**,
 - normalmente también **traducir en la notaría**: suele hacerlo el propio abogado, salvo que prefieras un traductor jurado.
 
-Coste: para una vivienda de 250.000 €, unos **1.500 € + IVA**.
+Coste: los honorarios varían. Con frecuencia son el **1% del precio + IVA**, aunque muchos despachos aplican tarifas mínimas o fijas, normalmente **entre 1.000 y 1.500 € + IVA**.
 
 ## NIE y cuenta bancaria
 

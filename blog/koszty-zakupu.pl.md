@@ -3,6 +3,7 @@ title: Ile kosztuje zakup mieszkania w Hiszpanii w 2026? Podatki i opłaty
 description: Koszty zakupu nieruchomości w Hiszpanii 2026: IVA, AJD, ITP, notariusz, rejestr i prawnik. Aktualne stawki dla Costa Blanca i Murcji oraz przykład wyliczenia.
 date: 2026-11-03
 slug: koszty-zakupu-nieruchomosci-w-hiszpanii
+lead: Podatki i opłaty przy zakupie nieruchomości w Hiszpanii – aktualne stawki na 2026 rok.
 image: willa-costa-blanca.jpg
 ---
 Cena z ogłoszenia to nie wszystko. Przy zakupie mieszkania lub domu w Hiszpanii trzeba doliczyć podatki i opłaty. To pytanie słyszę od klientów z Polski najczęściej, dlatego zebrałam wszystkie koszty zakupu w jednym miejscu, z aktualnymi stawkami na 2026 rok.
@@ -20,7 +21,7 @@ Razem podatki przy nowym mieszkaniu na Costa Blanca to **11,4% ceny**. Aktualne 
 
 ## Apartament turystyczny pod wynajem: VAT 21% z możliwością zwrotu
 
-Inaczej jest przy **apartamentach turystycznych**, czyli lokalach w kompleksach przeznaczonych pod wynajem turystyczny (często na gruncie o przeznaczeniu turystycznym lub usługowym, a nie mieszkaniowym). Nie są one prawnie „mieszkaniem”, dlatego przy zakupie od dewelopera płacisz **IVA 21%** zamiast 10% (plus AJD).
+Inaczej jest przy **apartamentach turystycznych**, czyli lokalach w kompleksach przeznaczonych pod wynajem turystyczny. Przy ich zakupie od dewelopera płacisz **IVA 21%** zamiast 10% (plus AJD).
 
 Dobra wiadomość: jeśli kupujesz taki apartament **pod wynajem turystyczny**, możesz **ubiegać się o zwrot tego VAT-u**. Zwykle robi się to w rozliczeniu za ostatni kwartał roku, składanym w styczniu, więc pieniądze wracają **w kolejnym roku po zakupie**. Warunki:
 
@@ -49,7 +50,7 @@ Dla stałych mieszkańców Hiszpanii (np. młodych kupujących pierwszy dom czy 
 Te opłaty płacisz niezależnie od tego, czy mieszkanie jest nowe, czy używane:
 
 - **Notariusz:** ok. 600–1 200 €. Stawki są ustalone urzędowo, a kwota zależy od ceny nieruchomości i **liczby stron aktu notarialnego**. Więcej o roli notariusza przeczytasz na stronie [Consejo General del Notariado](https://www.notariado.org).
-- **Rejestr nieruchomości** (*Registro de la Propiedad*, odpowiednik księgi wieczystej): ok. 400–800 €. Stan prawny nieruchomości można sprawdzić przez [Registradores de España](https://www.registradores.org).
+- **Rejestr nieruchomości** (*Registro de la Propiedad*, odpowiednik księgi wieczystej): ok. 400–800 €.
 
 ## Prawnik
 
@@ -61,7 +62,7 @@ Przy zakupie w obcym kraju prawnik to podstawa. Jego zadania to:
 - przy rynku wtórnym: **rozliczenia ze sprzedającym** i **przepisanie mediów** (prąd, woda) na Ciebie,
 - zwykle także **tłumaczenie u notariusza** – tłumaczem jest najczęściej sam prawnik, chyba że wolisz tłumacza przysięgłego.
 
-Koszt: przy mieszkaniu za 250 000 € to ok. **1 500 € + IVA**.
+Koszt: honoraria prawników są różne. Często jest to **1% ceny + IVA**, ale wiele kancelarii ma stawki minimalne lub stałe, zwykle **od 1 000 do 1 500 € + IVA**.
 
 ## NIE i konto w banku
 
