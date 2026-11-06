@@ -87,8 +87,8 @@ Entre los gastos recomendables está el **seguro de la vivienda**. Si quieres **
 | AJD 1,4% | 3.500 € | – |
 | ITP 9% | – | 22.500 € |
 | Notaría y registro | aprox. 1.500 € | aprox. 1.500 € |
-| Abogado (1.500 € + IVA) | 1.815 € | 1.815 € |
-| **Total** | **aprox. 31.800 € (12,7%)** | **aprox. 25.800 € (10,3%)** |
+| Abogado (2.500 € + IVA) | 3.025 € | 3.025 € |
+| **Total** | **aprox. 33.000 € (13,2%)** | **aprox. 27.000 € (10,8%)** |
 
 A esto se suman el seguro y, si hay hipoteca, sus gastos. Por eso un presupuesto seguro es del **14% en obra nueva** y del **13% en segunda mano**.
 

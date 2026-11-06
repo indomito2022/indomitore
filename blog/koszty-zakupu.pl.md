@@ -87,8 +87,8 @@ Z kosztów zalecanych warto od razu zaplanować **ubezpieczenie nieruchomości**
 | AJD 1,4% | 3 500 € | – |
 | ITP 9% | – | 22 500 € |
 | Notariusz i rejestr | ok. 1 500 € | ok. 1 500 € |
-| Prawnik (1 500 € + IVA) | 1 815 € | 1 815 € |
-| **Razem** | **ok. 31 800 € (12,7%)** | **ok. 25 800 € (10,3%)** |
+| Prawnik (2 500 € + IVA) | 3 025 € | 3 025 € |
+| **Razem** | **ok. 33 000 € (13,2%)** | **ok. 27 000 € (10,8%)** |
 
 Do tego dochodzi ubezpieczenie, a przy kredycie jego koszty. Dlatego bezpieczny budżet to **14% ceny przy nowym mieszkaniu** i **13% przy rynku wtórnym** – wtedy nic Cię nie zaskoczy u notariusza.
 

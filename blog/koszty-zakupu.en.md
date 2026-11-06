@@ -87,8 +87,8 @@ Among the recommended costs is **home insurance**. If you want to **rent the pro
 | AJD 1.4% | €3,500 | – |
 | ITP 9% | – | €22,500 |
 | Notary and registry | approx. €1,500 | approx. €1,500 |
-| Lawyer (€1,500 + VAT) | €1,815 | €1,815 |
-| **Total** | **approx. €31,800 (12.7%)** | **approx. €25,800 (10.3%)** |
+| Lawyer (€2,500 + VAT) | €3,025 | €3,025 |
+| **Total** | **approx. €33,000 (13.2%)** | **approx. €27,000 (10.8%)** |
 
 On top of this come insurance and, with a mortgage, its costs. That is why a safe budget is **14% for a new build** and **13% for a resale**.
 
