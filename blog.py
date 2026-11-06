@@ -12,6 +12,7 @@ Nagłówek każdego pliku:
     date: 2026-11-10
     slug: koszty-zakupu-nieruchomosci-w-hiszpanii    (adres artykułu w tym języku)
     image: koszty.jpg              (opcjonalnie – zdjęcie z folderu blog/zdjecia/ albo pełny adres https://)
+    lead: Krótkie zdanie pod tytułem (opcjonalnie – inaczej pokazuje się description)
     town: Benidorm                 (opcjonalnie – pod artykułem oferty z tej miejscowości)
     draft: true                    (opcjonalnie – szkic, NIE publikuje się)
     ---
@@ -40,7 +41,7 @@ TX = {
            "hub_lead": "Koszty, podatki, kredyt, formalności i najlepsze miejsca na Costa Blanca. Piszę o tym, o co najczęściej pytają mnie klienci z Polski.",
            "hub_title": "Blog o nieruchomościach w Hiszpanii – poradniki dla Polaków",
            "hub_desc": "Poradniki po polsku: koszty zakupu, podatki, kredyt hipoteczny i formalności przy kupnie mieszkania lub domu w Hiszpanii. Blog polskiego biura nieruchomości.",
-           "bio": "Agentka nieruchomości, Indómito Real Estate (RAICV 4368). Od 11 lat mieszka i pracuje w Hiszpanii.",
+           "bio": "Agentka nieruchomości",
            "cta_eyebrow": "Polskie biuro nieruchomości w Hiszpanii", "cta_h": "Masz pytania o zakup w Hiszpanii?",
            "cta_p": "Napisz, czego szukasz i jaki masz budżet – odpowiem po polsku i przygotuję wybór ofert dopasowany do Ciebie.",
            "form": "Formularz kontaktowy"},
@@ -50,7 +51,7 @@ TX = {
            "hub_lead": "Costes, impuestos, hipotecas, trámites y las mejores zonas de la Costa Blanca, explicado con claridad.",
            "hub_title": "Blog inmobiliario – guías para comprar vivienda en España",
            "hub_desc": "Guías prácticas sobre costes de compra, impuestos, hipotecas y trámites para comprar un piso o una casa en la Costa Blanca y la Costa Cálida.",
-           "bio": "Agente inmobiliaria, Indómito Real Estate (RAICV 4368). Vive y trabaja en España desde hace 11 años.",
+           "bio": "Agente inmobiliaria",
            "cta_eyebrow": "Indómito Real Estate", "cta_h": "¿Tienes preguntas sobre tu compra?",
            "cta_p": "Cuéntame qué buscas y tu presupuesto: te respondo y te preparo una selección de propiedades a tu medida.",
            "form": "Formulario de contacto"},
@@ -60,7 +61,7 @@ TX = {
            "hub_lead": "Costs, taxes, mortgages, paperwork and the best areas on the Costa Blanca, explained clearly for international buyers.",
            "hub_title": "Spain property blog – guides for international buyers",
            "hub_desc": "Practical guides for foreign buyers: purchase costs, taxes, mortgages and paperwork when buying an apartment or villa on the Costa Blanca and Costa Cálida.",
-           "bio": "Real estate agent, Indómito Real Estate (RAICV 4368). Living and working in Spain for 11 years.",
+           "bio": "Real estate agent",
            "cta_eyebrow": "Indómito Real Estate", "cta_h": "Questions about buying in Spain?",
            "cta_p": "Tell me what you are looking for and your budget – I will reply and send you a hand-picked selection of properties.",
            "form": "Contact form"},
@@ -296,7 +297,7 @@ def build_pages(B, props, stats, ver, dist):
                 src, _ = _img(p.get("image"), base, B)
                 hero_img = f'<img class="b-hero" src="{E(src)}" alt="{E(p["title"])}">' if src else ""
                 return (f'<article class="b-art"><header class="seo-hero"><div class="eyebrow">Blog · {date_txt(p["d"], lang)} · {_reading_min(p["body"])} {tx["min"]}</div>'
-                        f'<h1>{E(p["title"])}</h1>' + (f'<p class="lead">{E(p["description"])}</p>' if p.get("description") else "") + '</header>'
+                        f'<h1>{E(p["title"])}</h1>' + (f'<p class="lead">{E(p.get("lead") or p["description"])}</p>' if p.get("lead") or p.get("description") else "") + '</header>'
                         f'{hero_img}{author}{toc}<div class="seo-text">{body}</div></article>{offers}{cta(ctx, lang)}{more}')
 
             _, full_img = _img(p.get("image"), "", B)
